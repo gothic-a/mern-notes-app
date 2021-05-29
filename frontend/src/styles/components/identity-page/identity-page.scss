@@ -1,0 +1,24 @@
+.identity-page {
+    min-width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: $color-bcg;
+    padding: $padding-l 0;
+
+    &__container {
+        display: flex;
+        flex-direction: column;
+        min-width: 550px;
+        background-color: white;
+
+        .form-container {
+            padding: $padding-m $padding-l;
+            
+        }
+    }
+}
+
+@import './toggle-bar.scss';
+@import './form.scss';

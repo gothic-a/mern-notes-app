@@ -1,0 +1,20 @@
+.toggle-bar {
+    display: flex;
+    width: 100%;
+    letter-spacing: 1px;
+
+    &__register, &__login {
+        font-size: $base-fz * 1.1;
+        width: 50%;
+        text-align: center;
+        text-transform: uppercase;
+        font-weight: $fw-medium;
+        padding: $padding-sm 0;
+        cursor: pointer;
+
+        &_active {
+            background-color: $color-main;
+            color: white;
+        }
+    }
+}

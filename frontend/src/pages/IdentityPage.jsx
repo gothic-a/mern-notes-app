@@ -1,11 +1,15 @@
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
+import IdentityToggle from '../components/IdentityToggle'
+import Login from '../components/Login'
+import Register from '../components/Register'
+
 const LoginPage = () => {
+    const [selected, setSelected] = useState('register') 
 
     const history = useHistory()
-
     const { userInfo } = useSelector(state => state.userLogin)
 
     useEffect(() => {
@@ -14,9 +18,26 @@ const LoginPage = () => {
         }
     }, [history, userInfo])
 
+    const onToggleHandler = (value) => {
+        setSelected(value)
+    }
+
     return (
-        <div className="login-page">
-            login
+        <div className="identity-page">
+            
+            <div className="identity-page__container">
+
+                <IdentityToggle onToggleHandler={onToggleHandler} active={selected}/>
+                <div className="form-container">
+                    {
+                        selected === 'register' 
+                            ? <Register /> 
+                            : <Login />
+                    }
+                </div>
+                
+            </div>
+            
         </div>
     )
 }
