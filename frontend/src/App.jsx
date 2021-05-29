@@ -1,10 +1,19 @@
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
+import StartPage from './pages/StartPage'
+import IdentityPage from './pages/IdentityPage'
+import NotesPage from './pages/NotesPage'
 
 function App() {
   return (
-    <div className="App">
+    <Router>
+      <Switch>
+        <Route path="/" exact component={StartPage} />
+        <Route path="/notes/:name" exact component={NotesPage}/>
+        <Route path="/identity" exact component={IdentityPage}/>
+      </Switch>
       
-    </div>
+    </Router>
   );
 }
 
