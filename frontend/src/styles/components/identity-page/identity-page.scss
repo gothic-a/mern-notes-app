@@ -13,9 +13,10 @@
         min-width: 550px;
         background-color: white;
 
+        box-shadow: $shadow-outer;
+
         .form-container {
             padding: $padding-m $padding-l;
-            
         }
     }
 }

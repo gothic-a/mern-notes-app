@@ -12,7 +12,12 @@ $padding-s: 25px;
 $padding-m: 50px;
 $padding-l: 75px;
 
-$color-bcg: #f1f1f1;
+$color-bcg: #eff1f5;
 
 $color-main: #313131;
 $color-light: #3838386e;
+
+$transition: 0.2s;
+
+$shadow-outer: 0px 0px 20px 2px rgba($color-main, 0.1);
+$shadow-inner: 0px -20px 20px -18px rgba($color-main, 0.1) inset;

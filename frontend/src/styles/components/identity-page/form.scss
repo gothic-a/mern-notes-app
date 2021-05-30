@@ -7,17 +7,11 @@
         letter-spacing: 1px;
     }
 
-    &__title {
-        text-transform: uppercase;
-        margin: 10px 0 25px 0;
-        font-weight: $fw-medium;
-    }
-
     &__field {
         display: flex;
         flex-direction: column;
         width: 100%;
-        margin: 10px 0px;
+        margin-bottom: 20px;
 
         &-label {
             font-size: $base-fz * 0.85;
@@ -45,6 +39,11 @@
         font-size: $base-fz * 1.1;
         cursor: pointer;
         margin-top: 20px;
+        transition: $transition;
+
+        &:hover {
+            opacity: .85;
+        }
 
         &:disabled {
             opacity: .75;

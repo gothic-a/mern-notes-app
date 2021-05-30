@@ -13,6 +13,26 @@ body {
     overflow-x: hidden;
     font-size: $base-fz;
     color: $color-main;
+
+    &::-webkit-scrollbar {
+        width: 17px;
+
+        &-track {
+            background-color: rgba($color-light, 1);
+
+        }
+
+        &-thumb {
+            background-color: rgba($color-bcg, 1);
+            border-radius: 2px;
+            border: 2px solid rgba($color-light, 1);
+
+            &:hover {
+                background-color: rgba(white, 1);
+
+            }
+        }
+    }
 }
 
 input {

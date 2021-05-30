@@ -11,6 +11,8 @@
         font-weight: $fw-medium;
         padding: $padding-sm 0;
         cursor: pointer;
+        
+        box-shadow: $shadow-inner;
 
         &_active {
             background-color: $color-main;
