@@ -12,6 +12,7 @@
         flex-direction: column;
         width: 100%;
         margin-bottom: 20px;
+        position: relative;
 
         &-label {
             font-size: $base-fz * 0.85;
@@ -25,10 +26,33 @@
             padding: 15px 20px;
             font-size: $base-fz * 1.15;
             border-color: $color-light;
+            box-sizing: border-box;
+            font-weight: $fw-medium;
+
+            &_invalid {
+                border-color: $color-danger-transparent;
+                color: $color-danger;
+
+                &:focus {
+                    border-color: $color-danger-transparent !important;
+                }
+            }
             
             &:focus {
                 border-color: $color-main;
             }
+        }
+
+        &-validation-error {
+            display: flex;
+            width: 100%;
+            justify-content: flex-end;
+            color: $color-danger-transparent;
+            font-weight: $fw-bold;
+            position: absolute;
+            font-size: $base-fz * 0.7;
+            bottom: -16px;
+            text-transform: uppercase;
         }
     }
 
@@ -38,7 +62,7 @@
         font-weight: $fw-medium;
         font-size: $base-fz * 1.1;
         cursor: pointer;
-        margin-top: 20px;
+        margin-top: 30px;
         transition: $transition;
 
         &:hover {
