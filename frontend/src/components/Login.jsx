@@ -1,16 +1,20 @@
-import { useState } from 'react'
 import { Formik } from 'formik'
 import * as yup from 'yup'
 
+import { useDispatch } from 'react-redux'
+import { userLogin } from '../actions/userActions'
+
 const Login = () => {
+    
+    const dispatch = useDispatch()
 
     const formHandlerSubmit = (values) => {
-        console.log(values)
+        dispatch(userLogin(values))
     }
 
     const validationSchema = yup.object().shape({
         email: yup.string().typeError('must be string').required('email is required').email('email must be a valid'),
-        password: yup.string().typeError('must be string').required('password is required').min(6).max(18)
+        password: yup.string().typeError('must be string').required('password is required')
     })
 
     return (
@@ -28,10 +32,9 @@ const Login = () => {
         >
             
             {
-                ({values, errors, touched, handleChange, handleBlur, isValid, handleSubmit, dirty, setFieldTouched}) => (
+                ({values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldTouched}) => (
+
                     <form className="form form-login" onSubmit={handleSubmit}>
-                       
-                       
                         <div className="form__field">
                             <label className="form__field-label" htmlFor="email">email:</label>
                             <input 
@@ -56,7 +59,6 @@ const Login = () => {
                                 && touched.email 
                                 && <span className="form__field-validation-error">{errors.email}</span>
                             }
-                            
                         </div>
                         <div className="form__field">
                             <label className="form__field-label" htmlFor="password">

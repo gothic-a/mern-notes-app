@@ -10,13 +10,13 @@ const LoginPage = () => {
     const [selected, setSelected] = useState('register') 
 
     const history = useHistory()
-    const { userInfo } = useSelector(state => state.userLogin)
+    const { userData } = useSelector(state => state.userLogin)
 
     useEffect(() => {
-        if(userInfo && userInfo.login) {
-            history.push(`/notes/${userInfo.login}`)
+        if(userData && userData.email) {
+            history.push(`/notes/${userData.email}`)
         }
-    }, [history, userInfo])
+    }, [history, userData])
 
     const onToggleHandler = (value) => {
         setSelected(value)

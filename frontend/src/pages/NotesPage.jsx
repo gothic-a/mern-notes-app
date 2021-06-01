@@ -4,14 +4,14 @@ import { useHistory } from 'react-router-dom'
 
 const NotesPage = () => {
 
-    const { userInfo } = useSelector(state => state.userLogin)
+    const { userData } = useSelector(state => state.userLogin)
     const history = useHistory()
 
     useEffect(() => {
-        if(!userInfo) {
+        if(!userData) {
             history.push('/identity')
-        }
-    })
+        } 
+    }, [userData, history])
 
     return (
         <div className="notes-page">

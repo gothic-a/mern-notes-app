@@ -38,7 +38,10 @@ export const userRegister = asyncHandler( async (req, res) => {
 
         if(user) {
             res.status(201)
-            res.json(user)
+            res.json({
+                name: user.name, 
+                email: user.email,
+            })
         }
 
     } catch(err) {

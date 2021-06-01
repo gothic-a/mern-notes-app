@@ -26,12 +26,12 @@
             padding: 15px 20px;
             font-size: $base-fz * 1.15;
             border-color: $color-light;
-            box-sizing: border-box;
             font-weight: $fw-medium;
 
             &_invalid {
                 border-color: $color-danger-transparent;
-                color: $color-danger;
+                
+                background-color: rgba($color-danger, .075);
 
                 &:focus {
                     border-color: $color-danger-transparent !important;
@@ -66,6 +66,10 @@
         transition: $transition;
 
         &:hover {
+            opacity: .85;
+        }
+
+        &:focus {
             opacity: .85;
         }
 

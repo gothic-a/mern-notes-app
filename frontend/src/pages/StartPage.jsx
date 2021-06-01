@@ -4,12 +4,12 @@ import { useSelector } from 'react-redux'
 
 const StartPage = () => {
 
-    const { userInfo } = useSelector(state => state.userLogin)
+    const { userData } = useSelector(state => state.userLogin)
     const history = useHistory()
 
     useEffect(() => {
-        if(userInfo && userInfo.login) {
-            history.push(`/notes/${userInfo.login}`)
+        if(userData && userData.email) {
+            history.push(`/notes/${userData.email}`)
         } else {
             history.push('/identity')
         }

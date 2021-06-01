@@ -1,16 +1,22 @@
 import { Formik } from 'formik'
 import * as yup from 'yup'
-import { string } from 'yup/lib/locale'
+
+import { useDispatch, useSelector } from 'react-redux'
+import { userRegister } from '../actions/userActions'
 
 const Register = () => {
+
+    const dispatch = useDispatch()
+    const { succsess } = useSelector(state => state.userRegister)
+
     const formHandlerSubmit = (values) => {
-        console.log(values)
+        dispatch(userRegister(values))
     }
 
     const validationSchema = yup.object().shape({
         email: yup.string().typeError('must be a string').required('email is required').email('email must be a valid'), 
-        name: yup.string().typeError('must be a string').required('name is required').min(3).max(24),
-        password: yup.string().typeError('must be a string').required('password is required').min(6).max(18),
+        name: yup.string().typeError('must be a string').required('name is required').min(3, 'at least 3 characters').max(24, 'at least 24 characters'),
+        password: yup.string().typeError('must be a string').required('password is required').min(6, 'at least 6 characters').max(18, 'at most 18 characters'),
         confirmPassword: yup.string().typeError('must be a string').oneOf([yup.ref('password')], 'passwords missmatch').required('confirm your password')
     })
 
