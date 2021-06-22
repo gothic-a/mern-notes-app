@@ -1,0 +1,17 @@
+.message {
+    display: flex;
+    justify-content: center;
+    padding: $padding-s 0;
+    font-weight: $fw-medium;
+    letter-spacing: 1px;
+    font-size: $base-fz * 1.05;
+    margin: 10px 0;
+    transition: 0.75s opacity linear;
+
+    &_danger {
+        background-color: $color-danger-transparent;
+        border: 1px solid $color-danger-light; 
+    }
+    
+
+}

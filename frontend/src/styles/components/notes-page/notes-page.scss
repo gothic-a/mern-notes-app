@@ -1,0 +1,16 @@
+.notes-page {
+    width: 100vw;
+    min-height: 100vh;
+
+    &__content-wrapper {
+        width: 100%;
+        position: relative;
+        padding-top: $header-height;
+        justify-content: flex-end;
+        display: flex;
+    }
+}
+
+@import './header.scss';
+@import './sidebar.scss';
+@import './notes-view.scss';

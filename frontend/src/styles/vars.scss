@@ -12,13 +12,25 @@ $padding-s: 25px;
 $padding-m: 50px;
 $padding-l: 75px;
 
+$margin-sm: 15px;
+$margin-s: 25px;
+$margin-m: 50px;
+$margin-l: 75px;
+
 $color-bcg: #eff1f5;
 $color-main: #313131;
 $color-light: #3838386e;
+
 $color-danger: #d8284e;
-$color-danger-transparent: rgba(#d8284e, .8);
+$color-danger-text: rgba(#d8284e, .8);
+$color-danger-light: rgba(#d8284e, .5);
+$color-danger-transparent: rgba(#d8284e, .075);
 
 $transition: 0.2s;
 
 $shadow-outer: 0px 0px 20px 2px rgba($color-main, 0.1);
 $shadow-inner: 0px -20px 20px -18px rgba($color-main, 0.1) inset;
+
+$header-height: 90px;
+$tags-width: 6vw;
+$tags-height: $base-fz * 1.15 + $padding-sm * 2;

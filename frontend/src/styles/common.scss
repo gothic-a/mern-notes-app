@@ -18,14 +18,14 @@ body {
         width: 17px;
 
         &-track {
-            background-color: rgba($color-light, 1);
-
+            background-color: rgba($color-light, .35);
+            box-shadow: $shadow-inner;
         }
 
         &-thumb {
-            background-color: rgba($color-bcg, 1);
+            background-color: rgba(white, 1);
             border-radius: 2px;
-            border: 2px solid rgba($color-light, 1);
+            border: 2px solid rgba($color-light, .35);
 
             &:hover {
                 background-color: rgba(white, 1);

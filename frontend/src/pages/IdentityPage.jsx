@@ -13,8 +13,8 @@ const LoginPage = () => {
     const { userData } = useSelector(state => state.userLogin)
 
     useEffect(() => {
-        if(userData && userData.email) {
-            history.push(`/notes/${userData.email}`)
+        if(userData && userData.token) {
+            history.push(`/notes/${userData.name}`)
         }
     }, [history, userData])
 

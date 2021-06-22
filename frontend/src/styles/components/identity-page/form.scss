@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: $padding-s 0;
 
     & * {
         letter-spacing: 1px;
@@ -29,12 +30,12 @@
             font-weight: $fw-medium;
 
             &_invalid {
-                border-color: $color-danger-transparent;
+                border-color: $color-danger-light;
                 
-                background-color: rgba($color-danger, .075);
+                background-color: $color-danger-transparent;
 
                 &:focus {
-                    border-color: $color-danger-transparent !important;
+                    border-color: $color-danger-light !important;
                 }
             }
             
@@ -47,7 +48,7 @@
             display: flex;
             width: 100%;
             justify-content: flex-end;
-            color: $color-danger-transparent;
+            color: $color-danger-text;
             font-weight: $fw-bold;
             position: absolute;
             font-size: $base-fz * 0.7;
@@ -64,6 +65,7 @@
         cursor: pointer;
         margin-top: 30px;
         transition: $transition;
+        position: relative;
 
         &:hover {
             opacity: .85;
@@ -76,6 +78,20 @@
         &:disabled {
             opacity: .75;
             cursor: auto;
+        }
+
+        .loader-container {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 15px;
+
+            &__spinner {
+                border-width: 3.5px !important;
+            }
+            
         }
     }
 } 

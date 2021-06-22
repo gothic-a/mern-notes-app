@@ -3,6 +3,7 @@ import {
     USER_LOGIN_REQUEST,
     USER_LOGIN_SUCCESS,
     USER_LOGIN_FAIL,
+    USER_LOGOUT,
     USER_REGISTER_REQUEST,
     USER_REGISTER_SUCCESS,
     USER_REGISTER_FAIL,
@@ -40,6 +41,12 @@ export const userLogin = ({ email, password }) => async (dispatch, getState) => 
             payload
         })
     }       
+}
+
+export const userLogout = () => (dispatch) => {
+    dispatch({type: USER_LOGOUT})
+
+    localStorage.removeItem('userData')
 }
 
 export const userRegister = ({email, name, password, confirmPassword}) => async (dispatch) => {

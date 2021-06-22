@@ -1,0 +1,18 @@
+.loader-container {
+    &__spinner {
+        width: 100%;
+        height: 100%;
+        display: block;
+        border: 8px solid $color-bcg;
+        margin: 0;
+        border-radius: 50%;
+        border-left-color: transparent;
+        animation: spin .7s infinite linear;
+    }
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}

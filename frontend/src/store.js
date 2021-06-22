@@ -7,11 +7,16 @@ import thunk from 'redux-thunk'
 
 import { composeWithDevTools } from 'redux-devtools-extension'
 
-import { userLoginReducer, userRegisterReducer } from './reducers/userReducers'
+import { 
+    userLoginReducer, 
+    userRegisterReducer 
+} from './reducers/userReducers'
+import { sidebarReducer } from './reducers/sidebarReducers'
 
 const reducer = combineReducers({
     userLogin: userLoginReducer,
     userRegister: userRegisterReducer,   
+    sidebar: sidebarReducer,
 })
 
 const middlewares = [thunk]
