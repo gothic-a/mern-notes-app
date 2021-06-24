@@ -1,10 +1,9 @@
 .notes-view {
     width: 79vw;
-    padding: $padding-s $padding-m $padding-s $padding-m;
+    padding: $padding-s $padding-m $padding-m $padding-m;
     transition: all .5s;
     z-index: 1;
-    // background-color: $color-bcg;
-
+    
     * {
         letter-spacing: 1px;
     }
@@ -14,7 +13,7 @@
     }
 
     .notes-list {
-        margin-bottom: $margin-m;
+        margin: $margin-s 0;
 
         &__title {
             text-transform: uppercase;
@@ -88,7 +87,7 @@
                 display: inline-flex; 
                 color: $color-main;
                 font-weight: $fw-medium;
-                background-color: rgba($color-light, .3);
+                background-color: rgba($color-light, .2);
                 padding: 5px 10px;
                 margin: 0 5px 5px 0;
                 font-size: $base-fz / 1.15;

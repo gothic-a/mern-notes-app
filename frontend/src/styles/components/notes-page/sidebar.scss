@@ -9,6 +9,7 @@
     transition: width .5s;
     border-right: 1px solid rgba($color-light, .2);
     z-index: 10;
+    background-color: white;
 
     &.hidden {
         width: $tags-width;
@@ -27,7 +28,7 @@
 
         * {
             letter-spacing: 1px;
-            font-size: $base-fz * 1.15;
+            font-size: $base-fz * 1.1;
             color: $color-main;
         }
 

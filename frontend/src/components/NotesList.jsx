@@ -6,11 +6,19 @@ import Note from "./Note"
 const NotesList = ({ title, children }) => {
     const { isOpen } = useSelector(state => state.sidebar)
 
+    const breakpointColumns = {
+        default: isOpen ? 4 : 5,
+        1400: isOpen ? 3 : 4,
+        992: 3,
+        768: 2,
+        576: 1,
+    }
+
     return (
         <div className="notes-list">
             <h2 className="notes-list__title" >{title}</h2>
             <Masonry
-                breakpointCols={ isOpen ? 3 : 4 }
+                breakpointCols={ breakpointColumns }
                 className='notes-list__grid'
                 columnClassName='notes-list__grid-column'
             >

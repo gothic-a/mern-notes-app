@@ -15,8 +15,12 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        tags: [],
-        notes: []
+        tags: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Tag'
+            }
+        ]
     },
     {
         timestamps: true,

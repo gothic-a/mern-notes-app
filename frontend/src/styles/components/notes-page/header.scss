@@ -60,7 +60,7 @@
         align-items: center;
 
         &__name {
-            font-weight: $fw-regular;
+            font-weight: $fw-medium;
         }
 
         &__logout {
@@ -68,11 +68,22 @@
             padding: 10px;
             font-size: $base-fz * 1.5;
             cursor: pointer;
-            opacity: .75;
-            transition: .3s;
+            opacity: .8;
+            transition: .2s;
 
             &:hover {
                 opacity: 1;
+                animation: logout .4s;
+            }
+
+            @keyframes logout {
+                50% {
+                    transform: translateX(2px)
+                }
+
+                100% {
+                    transform: translateX(0);
+                }
             }
         }
     }

@@ -19,6 +19,7 @@
     "formik": "^2.2.8",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.12",
+    "morgan": "^1.10.0",
     "yup": "^0.32.9"
   },
   "devDependencies": {

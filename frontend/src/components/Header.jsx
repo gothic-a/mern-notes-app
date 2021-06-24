@@ -40,7 +40,7 @@ const Header = () => {
                     className="profile__logout" 
                     onClick={logoutClickHandler}
                 >
-                    <i className="fas fa-sign-out-alt"></i>
+                    <i className="far fa-sign-out"></i>
                 </div>
             </div>
         </div>

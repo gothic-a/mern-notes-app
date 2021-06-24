@@ -1,9 +1,12 @@
 import express from 'express'
 import dotenv from 'dotenv'
+import morgan from 'morgan'
 
 import connectDB from './config/db.js'
 
 import userRoutes from './routes/userRoutes.js'
+import tagsRoutes from './routes/tagsRoutes.js'
+
 import errorMidd from './middlewears/errorMidd.js'
 
 dotenv.config()
@@ -13,11 +16,14 @@ connectDB()
 const app = express()
 
 app.use(express.json())
+app.use(morgan('dev'))
 
 app.get('/', (req, res) => {
     res.send('notes app API')
 })
-app.use('/users', userRoutes)
+
+app.use('/api/users', userRoutes)
+app.use('/api/tags', tagsRoutes)
 
 app.use(errorMidd)
 

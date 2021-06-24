@@ -21,7 +21,7 @@ export const userLogin = ({ email, password }) => async (dispatch, getState) => 
     }
 
     try {
-        const { data } = await axios.post('/users/login', { email, password }, config) 
+        const { data } = await axios.post('/api/users/login', { email, password }, config) 
 
         dispatch({
             type: USER_LOGIN_SUCCESS,
@@ -63,7 +63,7 @@ export const userRegister = ({email, name, password, confirmPassword}) => async 
     try {
         if(password !== confirmPassword) throw new Error('Passwords missmatch')
 
-        const response = await axios.post('/users', {email, name, password, confirmPassword}, config)
+        const response = await axios.post('/api/users', {email, name, password, confirmPassword}, config)
 
         if(response.status === 201) {
             dispatch({
