@@ -7,6 +7,7 @@ import NotesPage from './pages/NotesPage'
 import './styles/common.scss'
 
 function App() {
+
   return (
     <Router>
       <Switch>
@@ -14,7 +15,6 @@ function App() {
         <Route path="/notes/:name" exact component={NotesPage}/>
         <Route path="/identity" exact component={IdentityPage}/>
       </Switch>
-      
     </Router>
   );
 }

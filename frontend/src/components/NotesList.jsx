@@ -10,7 +10,7 @@ const NotesList = ({ title, children }) => {
         <div className="notes-list">
             <h2 className="notes-list__title" >{title}</h2>
             <Masonry
-                breakpointCols={ isOpen ? 4 : 5 }
+                breakpointCols={ isOpen ? 3 : 4 }
                 className='notes-list__grid'
                 columnClassName='notes-list__grid-column'
             >

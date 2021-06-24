@@ -2,6 +2,8 @@
     display: flex;
     width: 100%;
     letter-spacing: 1px;
+    border-radius: 5px 0 0 5px;
+
 
     &__register, &__login {
         font-size: $base-fz * 1.1;
@@ -15,8 +17,16 @@
         box-shadow: $shadow-inner;
 
         &_active {
-            background-color: $color-main;
+            background-color: rgba($color-main, .95);
             color: white;
         }
+    }
+
+    &__register {
+        border-radius: 5px 0 0 0px;
+    }
+
+    &__login {
+        border-radius: 0px 5px 0 0px;
     }
 }

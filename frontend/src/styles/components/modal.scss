@@ -1,0 +1,74 @@
+.modal {
+    position: fixed;
+    z-index: 10000;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    display: flex;
+    pointer-events: none;
+
+    &_visible {
+        pointer-events: visible;
+
+        .modal__overlay {
+            transition: .35s;
+            opacity: 1;
+        }
+
+        .window {
+            transition: .35s;
+            transform: scale(1) !important;
+        }
+    }
+
+    &_destroy {
+        display: none;
+    }
+
+    &__overlay {
+        z-index: inherit;
+        width: 100%;
+        height: 100%;
+        background-color: rgba($color-main, .9);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: .35s;
+    }
+
+    .window {
+        max-height: 80%;
+        background-color: white;
+        border-radius: 5px;
+        transition: .35s;
+        transform: scale(.4);
+
+        &__header {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: $padding-s $padding-s;
+
+            * {
+                color: rgba($color-main, 1)
+            }
+
+            &-title {
+                font-weight: $fw-regular;
+                text-transform: uppercase;
+            }
+
+            &-icon {
+                font-size: $base-fz * 1.75;
+                cursor: pointer;
+                transition: .2s;
+
+                &:hover {
+                    opacity: .75;
+                }
+            }
+        }
+    }
+}

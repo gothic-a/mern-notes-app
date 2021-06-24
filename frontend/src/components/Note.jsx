@@ -1,32 +1,54 @@
+import Tag from './Tag' 
+
 const Note = ({ note }) => {
 
-    const deleteOverHandler = (e) => {
-        e.target.classList.remove('far')
-        e.target.classList.add('fas')
+    const toggleIcon = (e) => {
+        if(e.target.classList.contains('fas')) {
+            e.target.classList.remove('fas')
+            e.target.classList.add('far')
+        } else {
+            e.target.classList.remove('far')
+            e.target.classList.add('fas')
+        }
     }
 
-    const pinOverHandler = () => {
-
+    const noteStyles = {
+        backgroundColor: note.color,
     }
+
+    // if(note.color !== 'white' && note.color !== '#fff') noteStyles.border = 'none'
 
     return (
-        <div className="note" style={{backgroundColor: note.color}} data-pinned={note.pinned} >
+        <div 
+            className="note" 
+            style={noteStyles} 
+            data-pinned={note.pinned} 
+        >
             <div className="note__header">
-                <h4 className="note__header-title" >{note.title}</h4>
+                <h4 className="note__header-title">{note.title}</h4>
                 <div className="note__header-controls">
                     <i 
                         className="far fa-trash delete"
-                        onMouseOver={deleteOverHandler}
+                        onMouseOver={toggleIcon}
+                        onMouseOut={toggleIcon}
                     ></i>
                     <i 
-                        className={ note.pinned ? "fa fa-thumbtack pin" : "far fa-thumbtack pin"}
-                        onMouseOver={pinOverHandler}
+                        className={ note.pinned ? "fas fa-thumbtack pin" : "far fa-thumbtack pin"}
+                        onMouseOver={toggleIcon}
+                        onMouseOut={toggleIcon}
                     ></i>
                 </div>
             </div>
 
-            
             <p className="note__text" >{note.text}</p>
+
+            <div className="note__tags">
+                {
+                    note.tags.map(t => (
+                        <Tag>{t}</Tag> 
+                    ))
+                }
+            </div>
         </div>
     )
 }

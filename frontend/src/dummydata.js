@@ -5,7 +5,7 @@ export const notes = [
         text: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis similique odio quo ut voluptas quod officia ipsa accusantium tempore enim.",
         color: '#fff',
         pinned: false,
-        tags: ['buys', 'nina kraviz'],
+        tags: ['buys', 'nina'],
     },
     {
         title: 'Rosamund',
@@ -17,7 +17,7 @@ export const notes = [
     {
         title: 'Shopping',
         text: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis similique odio quo ut voluptas quod officia ipsa accusantium tempore enim.",
-        color: '#fff',
+        color: '#CAF7E3',
         pinned: false,
         tags: ['buys', 'nina kraviz'],
     },
@@ -38,15 +38,29 @@ export const notes = [
     {
         title: 'React',
         text: "Lorem ipsum dolor sit amet t voluptas quod officia ipsa accusantium tempore enim.",
-        color: 'tomato',
+        color: '#b3d9ff',
         pinned: false,
         tags: ['buys', 'nina kraviz'],
     },
     {
         title: 'training plan',
         text: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis similique odio quo ut voluptas quod officia ipsa accusantium tempore enim.",
-        color: '#fff',
+        color: 'rgb(255,180,180)',
         pinned: false,
         tags: ['buys', 'nina kraviz'],
-    }
+    },
+    {
+        title: 'Alexandro Gonsales Injaritty',
+        text: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis similique odio quo ut voluptas quod officia ipsa accusantium tempore enim.",
+        color: '#fff',
+        pinned: false,
+        tags: ['buys'],
+    },
+    {
+        title: 'Rosamund',
+        text: "Lorem ipsum Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione mollitia voluptatibus voluptas est reiciendis, accusantium libero necessitatibus cupiditate sint aspernatur.dolor sit  amet consectetur, adipisicing elit. Veritatis similique odio quo ut voluptas quod officia ipsa accusantium tempore enim.",
+        color: '',
+        pinned: false,
+        tags: ['buys', 'nina kraviz'],
+    },
 ]

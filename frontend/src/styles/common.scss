@@ -15,21 +15,19 @@ body {
     color: $color-main;
 
     &::-webkit-scrollbar {
-        width: 17px;
+        width: 15px;
 
-        &-track {
-            background-color: rgba($color-light, .35);
-            box-shadow: $shadow-inner;
+        &-track {   
+            background-color: transparent;
         }
 
         &-thumb {
-            background-color: rgba(white, 1);
-            border-radius: 2px;
-            border: 2px solid rgba($color-light, .35);
+            background-color: rgba($color-light, .3);
+            cursor: pointer;
+            border-radius: 3px;
 
             &:hover {
-                background-color: rgba(white, 1);
-
+                background-color: rgba($color-light, .45);
             }
         }
     }
@@ -37,7 +35,7 @@ body {
 
 input {
     outline: none;
-    border-radius: 0;
+    border-radius: 3px;
     border: 1px solid $color-main;
 }
 

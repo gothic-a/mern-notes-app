@@ -1,6 +1,8 @@
-const Tag = ({ children }) => {
+const Tag = ({ textColor = 'white',children }) => {
     return (
-        <li className="tags__item">
+        <li 
+            className="tags__item"
+        >
             <div className="tags__item-icon">
                 <i className="fas fa-tag"></i>
             </div>
