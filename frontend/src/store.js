@@ -13,12 +13,14 @@ import {
 } from './reducers/userReducers'
 import { sidebarReducer } from './reducers/sidebarReducers'
 import { modalReducer } from './reducers/modalReducer'
+import { tagsReducer } from './reducers/tagsReducers'
 
 const reducer = combineReducers({
     userLogin: userLoginReducer,
     userRegister: userRegisterReducer,   
     sidebar: sidebarReducer,
     modal: modalReducer,
+    tags: tagsReducer
 })
 
 const middlewares = [thunk]

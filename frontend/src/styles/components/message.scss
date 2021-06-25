@@ -7,6 +7,7 @@
     font-size: $base-fz * 1.05;
     margin: 10px 0;
     transition: 0.75s opacity linear;
+    border-radius: 3px;
 
     &_danger {
         background-color: $color-danger-transparent;

@@ -14,7 +14,7 @@ const LoginPage = () => {
 
     useEffect(() => {
         if(userData && userData.token) {
-            history.push(`/notes/${userData.name}`)
+            history.push(`/home/${userData.name}`)
         }
     }, [history, userData])
 

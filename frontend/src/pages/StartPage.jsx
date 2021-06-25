@@ -11,14 +11,15 @@ const StartPage = () => {
 
     useEffect(() => {
         if(userData && userData.token) {
-            history.push(`/notes/${userData.name}`)
+            history.push(`/home/${userData.name}`)
         } else {
             history.push('/identity')
         }
     })
 
     return (
-        <div className="start-page"><Loader/></div>
+        <>
+        </>
     )
 }
 

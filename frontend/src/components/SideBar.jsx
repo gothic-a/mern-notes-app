@@ -6,24 +6,30 @@ import Modal from './Modal'
 import TagsEditor from './TagsEditor'
 
 import { toggleModal } from '../actions/modalActions'
+import { getTags } from '../actions/tagsActions'
 
 const SideBar = () => {
-    const tagsList = useRef(null)
+    const tagsListEl = useRef(null)
     const sideBar = useRef(null)
 
     const dispatch = useDispatch()
     const { isOpen: isOpenSidebar } = useSelector(state => state.sidebar)
+    const { tagsList } = useSelector(state => state.tags)
 
     const removeHideScroll = (e) => {
         if(e.propertyName === 'width') {
             if(isOpenSidebar) {
-                tagsList.current.classList.remove('hide-scroll')
+                tagsListEl.current.classList.remove('hide-scroll')
             }
         }
-    }    
+    }   
     
     useEffect(() => {
-        if(!isOpenSidebar) tagsList.current.classList.add('hide-scroll')
+        dispatch(getTags())
+    }, [dispatch])
+    
+    useEffect(() => {
+        if(!isOpenSidebar) tagsListEl.current.classList.add('hide-scroll')
     }, [isOpenSidebar])
 
     return (
@@ -36,17 +42,14 @@ const SideBar = () => {
 
                 <div className="tags">
                     <ul 
-                        ref={tagsList} 
+                        ref={tagsListEl} 
                         className={"tags__list"}
                     >
-                        <Tag>All</Tag>
-                        <Tag>Majakovskiy</Tag>
-                        <Tag>Nina kraviz</Tag>
-                        <Tag>Shopping cart</Tag>
-                        <Tag>Buys</Tag>
-                        <Tag>Chekhov</Tag>
-                        <Tag>Dante</Tag>
-                        <Tag>Shopping cart</Tag>
+                        {
+                            tagsList.length && (
+                                tagsList.map(t => <Tag key={t._id}>{t.name}</Tag>)
+                            )     
+                        }
                     </ul>
 
                     <div 

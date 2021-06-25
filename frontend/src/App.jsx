@@ -8,11 +8,11 @@ import './styles/common.scss'
 
 function App() {
 
-  return (
+  return ( 
     <Router>
       <Switch>
         <Route path="/" exact component={StartPage} />
-        <Route path="/notes/:name" exact component={NotesPage}/>
+        <Route path="/home/:name" exact component={NotesPage}/>
         <Route path="/identity" exact component={IdentityPage}/>
       </Switch>
     </Router>
