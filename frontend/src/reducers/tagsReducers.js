@@ -8,6 +8,7 @@ import {
     TAG_UPDATE_REQUEST,
     TAG_UPDATE_SUCCESS,
     TAG_UPDATE_FAIL,
+    TAG_UPDATE_RESET,
     TAG_DELETE_REQUEST,
     TAG_DELETE_SUCCESS,
     TAG_DELETE_FAIL,
@@ -22,13 +23,11 @@ const initialState = {
 }
 
 const addTag = ({tagsList}, action) => {
-    console.log(tagsList, action)
     return [action.payload].concat(tagsList)
 }
 
 const deleteTag = ({tagsList}, action) => {
     const idx = tagsList.findIndex(t => t._id === action.payload)
-    const tag = tagsList[idx]
 
     return [
         ...tagsList.slice(0, idx),
@@ -38,8 +37,6 @@ const deleteTag = ({tagsList}, action) => {
 
 const updateTag = ({tagsList}, action) => {
     const { payload } = action
-
-    console.log(payload)
 
     const idx = tagsList.findIndex(t => t._id === payload._id)
 
@@ -126,6 +123,11 @@ export const tagsReducer = (state = initialState, action) => {
                     loading: false,
                     error: action.payload
                 }
+            }
+        case TAG_UPDATE_RESET:
+            return {
+                ...state,
+                tagsUpdate: {}
             }
 
         case TAG_DELETE_REQUEST:

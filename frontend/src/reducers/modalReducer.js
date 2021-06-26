@@ -1,11 +1,20 @@
-import { SET_MODAL_VISABILITY } from "../constants/modalConstants"
+import { 
+    SET_MODAL_OPEN,
+    SET_MODAL_CLOSE 
+} from "../constants/modalConstants"
 
 export const modalReducer = (state = { isOpen: false }, action) => {
     switch(action.type) {
-        case SET_MODAL_VISABILITY:
-            const prev = state.isOpen
+        case SET_MODAL_OPEN:
             return {
-                isOpen: !prev
+                isOpen: true,
+                modalContent: action.payload,
+            }
+        case SET_MODAL_CLOSE:
+            console.log(state)
+            return {
+                ...state,
+                isOpen: false
             }
         default:
             return state

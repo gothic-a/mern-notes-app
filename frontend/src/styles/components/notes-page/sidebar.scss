@@ -2,7 +2,8 @@
     position: fixed;
     top: 0;
     left: 0;
-    padding-top: $header-height;
+    padding-top: $header-height + $padding-s;
+    padding-bottom: $padding-s;
     width: 21vw;
     height: 100vh;
     overflow: hidden;
@@ -10,6 +11,9 @@
     border-right: 1px solid rgba($color-light, .2);
     z-index: 10;
     background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
     &.hidden {
         width: $tags-width;
@@ -19,12 +23,61 @@
         white-space: nowrap;
     }
 
+    &__item {
+        display: flex;
+        height: $tags-height;
+        margin: 5px 0;
+        transition: .2s;
+        cursor: pointer;
+        overflow: hidden;
+        position: relative;
+        align-items: center;
+
+        * {
+            letter-spacing: 1px;
+            color: $color-main;
+            font-size: $base-fz * 1.1;
+        }
+
+        &:hover {
+            background-color: rgba($color-light, .1);
+
+            .side-bar__item-icon {
+
+                i {
+                    color: $color-main;
+                }
+            }
+        }
+
+        &-icon {
+            width: $tags-width;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            i {
+                color: $color-light;
+                transition: .15s;
+                font-size: $base-fz * 1.15;
+            }
+
+            .fa-plus {
+                font-size: $base-fz * 1.75;
+            }
+        }
+
+        &-text {
+            position: absolute;
+            left: $tags-width;
+        }
+    }
+
     .tags {
-        padding: $padding-s 1px $padding-s 0;
         display: flex;
         flex-direction: column;
-        height: 100%;
         justify-content: space-between;
+        height: auto;
 
         * {
             letter-spacing: 1px;
@@ -33,7 +86,7 @@
         }
 
         &__list {
-            max-height: $tags-height * 10;
+            max-height: ($tags-height + 5px) * 10;
             transition: all .2s;
             overflow-y: auto;
 
@@ -63,16 +116,12 @@
         &__item {
             display: flex;
             height: $tags-height;
-            margin: 5px 0;
+            margin-bottom: 5px;
             transition: width .2s;
             cursor: pointer;
             overflow: hidden;
             position: relative;
             align-items: center;
-
-            &:nth-last-child(1), &:nth-child(1) {
-                margin: 0;
-            } 
 
             &:hover {
                 background-color: rgba($color-light, .1);

@@ -12,7 +12,6 @@ const protect = asyncHandler(async (req, res, next) => {
 
         try {
             const token = req.headers.authorization.split(' ')[1]
-            console.log(token)
             const { id } = jwt.decode(token, process.env.JWT_SECRET)
 
             const user = await User.findById(id)

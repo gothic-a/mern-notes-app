@@ -18,7 +18,7 @@ const Modal = ({ children, title}) => {
         e.stopPropagation()
         if(isOpen && e.target.dataset.type === 'close-modal') {
             modal.current.classList.remove('modal_visible')
-            dispatch(toggleModal())
+            dispatch(toggleModal('close'))
         }
     }
  

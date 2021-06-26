@@ -35,13 +35,17 @@ export const createTag = asyncHandler(async (req, res) => {
 export const getUserTags = asyncHandler(async (req, res) => {
     const { _id } = req.user
 
-    try {
-        const tags = await Tag.find({user: _id}).sort({createdAt: -1})
+    const tags = await Tag.find({user: _id}).sort({createdAt: -1})
 
+    if(tags) {
+        const length = JSON.stringify(tags).length
+
+        res.set('x-content-length', length)
+        res.status(200)
         res.json({tags})
-    } catch(error) {
-        res.status(500)
-        throw new Error('Server error')
+    } else {
+        res.status(403)
+        throw new Error('Access fail')
     }
 }) 
 
@@ -49,11 +53,8 @@ export const updateTag = asyncHandler(async (req, res) => {
     const { id } = req.params
     const { newName } = req.body 
 
-    console.log(newName)
     try {
         const tag = await Tag.findByIdAndUpdate(id, { name: newName }, {new: true, useFindAndModify: false}) 
-
-        console.log(tag)
 
         if(tag) {
             res.status(200)

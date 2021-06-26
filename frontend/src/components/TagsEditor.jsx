@@ -4,33 +4,47 @@ import { useDispatch, useSelector } from 'react-redux'
 import { 
     createTag,
     deleteTag,
-    updateTag
+    updateTag,
+    resetUpdate
 } from '../actions/tagsActions'
 
 const TagsEditor = () => {
     const dispatch = useDispatch()
-    const { tagsList, tagsGet: { loading: getLoading } } = useSelector(state => state.tags)
-    const { tagsUpdate: { loading: updateLoading } } = useSelector(state => state.tags)
+    const { 
+        tagsList, 
+        tagsGet: { 
+            loading: getLoading 
+        } 
+    } = useSelector(state => state.tags)
+    const { 
+        tagsUpdate: { 
+            loading: updateLoading, 
+            success: updateSuccess 
+        } 
+    } = useSelector(state => state.tags)
 
     const [editable, setEditable] = useState(false)
     const [editableTag, setEditableTag] = useState('')
     const [editableInput, setEditableInput] = useState('')
     const [editableInputValue, setEditableInputValue] = useState('')
 
-    console.log(editableInputValue)
-
     const [newTag, setNewTag] = useState('')
 
     useEffect(() => {
         if(editable && editableTag && editableInput && editableInputValue) {
             editableTag.classList.add('editable')
-
             editableTag.querySelector('.tags__item-controls')
             editableInput.value = editableInputValue
             editableInput.focus()
             editableInput.addEventListener('keyup', onEditableInputChange)
         } 
     }, [editable, editableTag, editableInput, editableInputValue])
+
+    useEffect(() => {
+        if(editableInput && updateSuccess) {
+            editableInput.blur()
+        }
+    }, [editableInput, updateSuccess])
 
     const onEditableInputChange = (e) => {
         setEditableInputValue(e.target.value)
@@ -47,6 +61,7 @@ const TagsEditor = () => {
 
     const tagsClickHandler = (e) => {
         if(e.target.dataset.type === 'edit') {
+            dispatch(resetUpdate())
             if(document.activeElement === editableInput) {
                 e.preventDefault()
                 editableInput.blur()
@@ -68,8 +83,6 @@ const TagsEditor = () => {
                     id: editableTag.dataset.id,
                     newName: editableInputValue,
                 })
-
-                if(!updateLoading) editableInput.blur()
             }
         } else if(e.target.dataset.type === 'delete') {
             const id = e.target.closest('.tags__item').dataset.id
@@ -97,7 +110,7 @@ const TagsEditor = () => {
                 onMouseDown={tagsClickHandler}
             >
                 {
-                    !getLoading && (
+                    tagsList.length && (
                         tagsList.map(t => (
                             <li 
                                 className="tags__item" 
@@ -111,7 +124,7 @@ const TagsEditor = () => {
                                         type='text'
                                         onBlur={reset}
                                     /> 
-                                    <p className="text">{ !updateLoading && t.name}</p>
+                                    <p className="text">{t.name}</p>
                                 </div>
                                 
                                 <div className="tags__item-controls">

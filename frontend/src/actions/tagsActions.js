@@ -9,21 +9,29 @@ import {
     TAG_UPDATE_REQUEST,
     TAG_UPDATE_SUCCESS,
     TAG_UPDATE_FAIL,
+    TAG_UPDATE_RESET,
     TAG_DELETE_REQUEST,
     TAG_DELETE_SUCCESS,
     TAG_DELETE_FAIL,
 } from '../constants/tagsConstants'
+import onProgress from '../utils/onUpladProgress'
 
 const getConfig = ({ userLogin }, isContent = false) => {
     const { userData: { token } } = userLogin
 
     let config = {
         headers: {
-            Authorization: `Bearer ${token}`
-        }
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'x-no-comprassion': true
+        },
     }
 
-    if(isContent) config.headers['Content-Type'] = 'application/json'
+    if(isContent) {
+        config.onUploadProgress = (progressEvent) => console.log(progressEvent)
+    } else {
+        config.onDownloadProgress = (progressEvent) => console.log(progressEvent)
+    }
 
     return config
 }
@@ -41,8 +49,8 @@ export const getTags = () => async (dispatch, getState) => {
     const config = getConfig(getState())
 
     try {
-        const { data: {tags} } = await axios.get('/api/tags', config)
-        success(tags)
+        const response = await axios.get('/api/tags', config)
+        success(response.data.tags)
     } catch(error) {  
         const payload = getError(error)
         fail(payload)
@@ -94,7 +102,6 @@ export const updateTag = ({id, newName}) => async (dispatch, getState) => {
 
     try {
         const { data: { tag } } = await axios.put(`/api/tags/${id}`, { newName }, config)
-        console.log(tag)
         success(tag)
     } catch(error) {
         const payload = getError(error)
@@ -106,3 +113,5 @@ export const updateTag = ({id, newName}) => async (dispatch, getState) => {
     function success(tag) {dispatch({type: TAG_UPDATE_SUCCESS, payload: tag})}
     function fail(error) {dispatch({type: TAG_UPDATE_FAIL, payload: error})}
 }
+
+export const resetUpdate = () => ({type: TAG_UPDATE_RESET})

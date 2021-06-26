@@ -16,8 +16,9 @@ export const userLogin = ({ email, password }) => async (dispatch, getState) => 
 
     const config = {
         headers: {
-            "Content-type": "application/json; charset=UTF-8"
-        }
+            "Content-type": "application/json; charset=UTF-8",
+        },
+        onUploadProgress: (progressEvent) => console.log(progressEvent.loaded, progressEvent.total)
     }
 
     try {
