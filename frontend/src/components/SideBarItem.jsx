@@ -3,7 +3,7 @@ const SideBarItem = ({text, children, onClickHandler}) => {
     return (
         <div 
             className="side-bar__item"
-            onClick={onClickHandler ? onClickHandler : ''}
+            onClick={onClickHandler}
         >
             <div className="side-bar__item-icon">
                 {

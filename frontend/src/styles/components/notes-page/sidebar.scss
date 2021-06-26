@@ -16,7 +16,7 @@
     justify-content: space-between;
 
     &.hidden {
-        width: $tags-width;
+        width: $tags-width + 0.3;
     }
 
     * {
@@ -37,6 +37,14 @@
             letter-spacing: 1px;
             color: $color-main;
             font-size: $base-fz * 1.1;
+        }
+
+        &:nth-child(1) {
+            margin-top: 0;
+        }
+
+        &:nth-last-child(1) {
+            margin-bottom: 0;
         }
 
         &:hover {
@@ -69,24 +77,15 @@
 
         &-text {
             position: absolute;
-            left: $tags-width;
+            left: $tags-width + 0.25;
         }
     }
 
     .tags {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
         height: auto;
 
-        * {
-            letter-spacing: 1px;
-            font-size: $base-fz * 1.1;
-            color: $color-main;
-        }
-
         &__list {
-            max-height: ($tags-height + 5px) * 10;
+            max-height: ($tags-height + 5px) * 7;
             transition: all .2s;
             overflow-y: auto;
 
@@ -95,7 +94,7 @@
             }
 
             &::-webkit-scrollbar {
-                width: 15px;
+                width: 17px;
     
                 &-track {   
                     background-color: rgba($color-light, 0);
@@ -105,51 +104,12 @@
                     background-color: rgba($color-light, .2);
                     cursor: pointer;
                     border-radius: 3px;
+                    border-right: 3px solid white;
     
                     &:hover {
                         background-color: rgba($color-light, .3);
                     }
                 }
-            }
-        }
-
-        &__item {
-            display: flex;
-            height: $tags-height;
-            margin-bottom: 5px;
-            transition: width .2s;
-            cursor: pointer;
-            overflow: hidden;
-            position: relative;
-            align-items: center;
-
-            &:hover {
-                background-color: rgba($color-light, .1);
-
-                .tags__item-icon {
-
-                    i {
-                        color: $color-main;
-                    }
-                }
-            }
-
-            &-icon {
-                width: $tags-width;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-
-                i {
-                    color: $color-light;
-                    transition: .15s;
-                    font-size: $base-fz * 1.2;
-                }
-            }
-
-            &-text {
-                position: absolute;
-                left: $tags-width
             }
         }
     }

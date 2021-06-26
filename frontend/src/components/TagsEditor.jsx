@@ -110,7 +110,7 @@ const TagsEditor = () => {
                 onMouseDown={tagsClickHandler}
             >
                 {
-                    tagsList.length && (
+                    tagsList.length !== 0 && (
                         tagsList.map(t => (
                             <li 
                                 className="tags__item" 

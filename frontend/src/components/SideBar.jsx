@@ -50,24 +50,28 @@ const SideBar = () => {
                         ref={tagsListEl} 
                         className={"tags__list"}
                     >
+                        <SideBarItem 
+                            text='All'
+                        >
+                            {
+                                <i className="fas fa-tag"></i>
+                            }
+                        </SideBarItem>
                         {
                             tagsList.length ? (
-                                tagsList.map(t => <Tag key={t._id}>{t.name}</Tag>)
+                                tagsList.map(t => (
+                                    <SideBarItem 
+                                        text={t.name}
+                                        key={t._id}
+                                    >
+                                        {
+                                            <i className="fas fa-tag"></i>
+                                        }
+                                    </SideBarItem>
+                                ))
                             ) : null
                         }
                     </ul>
-
-                    {/* <div 
-                        className="tags__change"
-                        onClick={() => dispatch(toggleModal())}
-                    >
-                        <div className="tags__item">
-                            <div className="tags__item-icon">
-                                <i className="fas fa-pen"></i>
-                            </div>
-                            <span className="tags__item-text">Change tags</span>
-                        </div>
-                    </div> */}
                 </div>
                 <div className="sidebar__controls">
                     <SideBarItem 
@@ -90,11 +94,11 @@ const SideBar = () => {
                 
             </div>
             {
-               <Modal title="change tags">
+               <Modal title={modalContent}>
                    {
                         modalContent === 'change tags' 
                             ? <TagsEditor />
-                            : <NoteEditor />
+                            : <NoteEditor variant="create" />
 
                    }
                    

@@ -24,7 +24,7 @@ const NotesList = ({ title, children }) => {
             >
                 {
                     children.map(n => (
-                        <Note note={n}/>
+                        <Note key={n.title} note={n}/>
                     ))
                 }
             </Masonry>

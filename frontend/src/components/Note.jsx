@@ -45,7 +45,7 @@ const Note = ({ note }) => {
             <div className="note__tags">
                 {
                     note.tags.map(t => (
-                        <Tag>{t}</Tag> 
+                        <Tag key={t}>{t}</Tag> 
                     ))
                 }
             </div>

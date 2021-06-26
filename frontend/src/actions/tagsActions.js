@@ -21,9 +21,8 @@ const getConfig = ({ userLogin }, isContent = false) => {
 
     let config = {
         headers: {
-            Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
-            'x-no-comprassion': true
+            Authorization: `Bearer ${token}`,
         },
     }
 
@@ -49,8 +48,8 @@ export const getTags = () => async (dispatch, getState) => {
     const config = getConfig(getState())
 
     try {
-        const response = await axios.get('/api/tags', config)
-        success(response.data.tags)
+        const { data: { tags }} = await axios.get('/api/tags', config)
+        success(tags)
     } catch(error) {  
         const payload = getError(error)
         fail(payload)
