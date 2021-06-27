@@ -107,7 +107,7 @@
 
     &__note-tags {
         border-bottom: 1px solid rgba($color-light, .2);
-        padding: $padding-sm $padding-s;
+        padding: $padding-sm - 5px $padding-s;
         min-width: 100%;
 
         .note-tags-list {
@@ -126,16 +126,24 @@
                 margin-bottom: 5px;
             }
 
+            i {
+                color: rgba($color-main, .8);
+                padding: 5px;
+            }
+
             .tag-icon {
                 margin-right: 10px;
-                padding: 5px;
             }
 
             .delete-icon {
                 margin-left: 10px;
                 cursor: pointer;
                 font-size: $base-fz * 1.2;
-                padding: 5px;
+                transition: .2s;
+
+                &:hover {
+                    color: rgba($color-main, 1)
+                }
             }
         }
     }
@@ -202,16 +210,13 @@
                 overflow-y: auto;
                 height: $open-height - $close-height;
                 margin-right: 3px;
-                margin-top: 5px;
-                padding-bottom: 10px ;
+                padding: 5px 0;
 
                 &__item {
-                    height: $line-height;
-                    padding: 15px 0;
+                    padding: 7px 0;
                     cursor: pointer;
                     display: flex;
                     align-items: center;
-                    margin-bottom: 3px;
 
                     &:hover {
                         font-weight: $fw-medium;

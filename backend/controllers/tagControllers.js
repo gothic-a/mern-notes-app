@@ -73,15 +73,15 @@ export const deleteTag = asyncHandler(async (req, res) => {
     const { id } = req.params 
 
     try {
-        const result = await Tag.findByIdAndDelete(id) 
+        await Tag.findByIdAndDelete(id) 
 
-        if(result) {
-            res.status(200)
-            res.json('success')
-        } else {
-            res.status(404)
-            throw new Error('Deleted tag not find')
-        }
+        const user = await User.findById(req.user._id)
+        const newTags = user.tags.filter(t => id !== t.toString())
+        user.tags = newTags
+        user.save() 
+
+        res.status(200)
+        res.json('success')
     } catch (error) {
         res.status(400)
         throw new Error('Incorrect tag id')

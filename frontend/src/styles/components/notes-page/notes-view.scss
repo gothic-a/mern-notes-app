@@ -1,7 +1,7 @@
 .notes-view {
     width: 79vw;
     padding: $padding-s $padding-m $padding-m $padding-m;
-    transition: height .4s;
+    transition: width .5s;
     z-index: 1;
     
     * {

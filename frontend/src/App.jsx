@@ -12,7 +12,7 @@ function App() {
     <Router>
       <Switch>
         <Route path="/" exact component={StartPage} />
-        <Route path="/home/:name" exact component={NotesPage}/>
+        <Route path="/home/:name" component={NotesPage}/>
         <Route path="/identity" exact component={IdentityPage}/>
       </Switch>
     </Router>

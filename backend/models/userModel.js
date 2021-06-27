@@ -20,6 +20,12 @@ const userSchema = new mongoose.Schema(
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'Tag'
             }
+        ],
+        notes: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Note'
+            }
         ]
     },
     {

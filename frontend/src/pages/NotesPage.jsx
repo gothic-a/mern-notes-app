@@ -19,11 +19,18 @@ const NotesPage = () => {
 
     return (
         <div className="notes-page">
-                <Header />
-                <div className="notes-page__content-wrapper">
-                    <SideBar />
-                    <NotesView />
-                </div>
+            {
+                userData && (
+                    <>
+                        <Header />
+                        <div className="notes-page__content-wrapper">
+                            <SideBar />
+                            <NotesView />
+                        </div>
+                    </>
+                )
+            }
+                
         </div>
     )
 }
