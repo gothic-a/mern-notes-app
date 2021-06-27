@@ -5,23 +5,38 @@ import asyncHandler from 'express-async-handler'
 
 export const createNote = asyncHandler(async (req, res) => {
     const { _id: id } = req.user
-    const data = { ...req.body }
+    const data = { ...req.body } 
 
-    const note = await Note.create({
-        ...data,
-        user: id
-    })
-
-    if(note) {
+    try {
         const user = await User.findById(id)
-        user.notes.push(note._id)
-        user.save()
 
-        res.status(200)
-        res.json(note)
-    } else {
-        res.status(400)
-        throw new Error('Incorrect note data')
+        let tagsBelongToUser = true
+
+        if(data.tags && data.tags.length !== 0) {
+            data.tags.forEach(t => {
+                tagsBelongToUser = user.tags.includes(t)
+                
+            })
+        }
+
+        if(tagsBelongToUser) {
+            const note = await Note.create({
+                ...data,
+                user: id
+            })
+
+            user.notes.push(note._id)
+            user.save()
+    
+            res.status(200)
+            res.json(note)
+        } else {
+            res.status(403)
+            throw new Error('Tags do not belong to user')
+        }
+
+    } catch(error) {
+        throw new Error(error.message)
     }
 })
 
@@ -29,15 +44,16 @@ export const getNotes = asyncHandler(async (req, res) => {
     const page = +req.query.page || 1
     const pageSize = +req.query.pageSize || 30
 
-    console.log(req.query)
-
     try {
         const count = await Note.countDocuments()
         const notes = await Note.find({user: req.user._id, pinned: false})
             .sort({createdAt: -1})
             .skip(pageSize * (page - 1))
             .limit(pageSize)
-        const pinned = await Note.find({user: req.user._id, pinned: true}).sort({createdAt: -1})
+            .populate('tags')
+            
+        const pinned = await Note.find({user: req.user._id, pinned: true})
+            .sort({updatedAt: -1})
 
         res.status(200)
         res.json({count, pinned, notes})
