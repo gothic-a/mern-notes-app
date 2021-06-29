@@ -16,8 +16,6 @@ const Note = ({ note }) => {
         backgroundColor: note.color,
     }
 
-    // if(note.color !== 'white' && note.color !== '#fff') noteStyles.border = 'none'
-
     return (
         <div 
             className="note" 
@@ -45,7 +43,7 @@ const Note = ({ note }) => {
             <div className="note__tags">
                 {
                     note.tags.map(t => (
-                        <Tag key={t}>{t}</Tag> 
+                        <Tag key={t}>{t.name}</Tag> 
                     ))
                 }
             </div>

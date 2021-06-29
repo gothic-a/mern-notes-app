@@ -2,8 +2,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    padding-top: $header-height + $padding-s;
-    padding-bottom: $padding-s;
+    padding-top: $header-height;
     width: 21vw;
     height: 100vh;
     overflow: hidden;
@@ -58,6 +57,17 @@
             }
         }
 
+        &.active {
+            background-color: rgba($color-light, .1);
+
+            .side-bar__item-icon {
+
+                i {
+                    color: $color-main;
+                }
+            }
+        }
+
         &-icon {
             width: $tags-width;
             display: flex;
@@ -83,6 +93,7 @@
 
     .tags {
         height: auto;
+        margin-top: $margin-s;
 
         &__list {
             max-height: ($tags-height + 5px) * 7;
@@ -112,5 +123,9 @@
                 }
             }
         }
+    }
+
+    .sidebar__controls {
+        margin-bottom: $margin-s;
     }
 }

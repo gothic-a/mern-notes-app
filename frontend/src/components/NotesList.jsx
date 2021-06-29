@@ -8,7 +8,7 @@ const NotesList = ({ title, children }) => {
 
     const breakpointColumns = {
         default: isOpen ? 4 : 5,
-        1400: isOpen ? 3 : 4,
+        1200: isOpen ? 3 : 4,
         992: 3,
         768: 2,
         576: 1,
@@ -24,7 +24,7 @@ const NotesList = ({ title, children }) => {
             >
                 {
                     children.map(n => (
-                        <Note key={n.title} note={n}/>
+                        <Note key={n._id} note={n}/>
                     ))
                 }
             </Masonry>

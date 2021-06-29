@@ -13,10 +13,7 @@ export const createNote = asyncHandler(async (req, res) => {
         let tagsBelongToUser = true
 
         if(data.tags && data.tags.length !== 0) {
-            data.tags.forEach(t => {
-                tagsBelongToUser = user.tags.includes(t)
-                
-            })
+            data.tags.forEach(t => tagsBelongToUser = user.tags.includes(t))
         }
 
         if(tagsBelongToUser) {
@@ -42,21 +39,52 @@ export const createNote = asyncHandler(async (req, res) => {
 
 export const getNotes = asyncHandler(async (req, res) => {
     const page = +req.query.page || 1
-    const pageSize = +req.query.pageSize || 30
+    const pageSize = +req.query.pageSize || 10
+    const filter = req.query.filter || ''
+    const search = req.query.search || ''
+
+    console.log(filter, search)
+
+    const filterQuery = () => filter ? { tags: filter } : ''
+
+    const searchQuery = () => {
+        if(!search) return ''
+        const query = {
+            $or: [
+                {
+                    title: {
+                        $regex: search,
+                        $options: 'i',
+                    }
+                }, 
+                {
+                    text: {
+                        $regex: search,
+                        $options: 'i',
+                    }
+                }
+            ]
+        }
+        return query
+    }
 
     try {
-        const count = await Note.countDocuments()
+        const count = await Note.find({user: req.user._id, pinned: false}).where({...filterQuery(), ...searchQuery()}).countDocuments()
+        const pagesCount = Math.ceil(count / pageSize)
         const notes = await Note.find({user: req.user._id, pinned: false})
+            .where({...filterQuery(), ...searchQuery()})
             .sort({createdAt: -1})
             .skip(pageSize * (page - 1))
             .limit(pageSize)
-            .populate('tags')
+            .populate('tags', ['_id', "name"])
             
         const pinned = await Note.find({user: req.user._id, pinned: true})
+            .where({...filterQuery(), ...searchQuery()})
             .sort({updatedAt: -1})
+            .populate('tags', ['_id', "name"])
 
         res.status(200)
-        res.json({count, pinned, notes})
+        res.json({count, pinned, notes, page, pagesCount})
     } catch(error) {
         res.status(400)
         throw new Error(error.message)

@@ -5,21 +5,9 @@
 * {
    box-sizing: border-box; 
    @include main-font;
-}
 
-body {
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-    font-size: $base-fz;
-    color: $color-main;
-
-    &::-webkit-scrollbar {
+   &::-webkit-scrollbar {
         width: 15px;
-
-        &-track {   
-            background-color: transparent;
-        }
 
         &-thumb {
             background-color: rgba($color-light, .3);
@@ -31,6 +19,19 @@ body {
             }
         }
     }
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    font-size: $base-fz;
+    color: $color-main;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+    
 }
 
 input {

@@ -9,6 +9,7 @@ import NoteEditor from './NoteEditor'
 
 import { toggleModal } from '../actions/modalActions'
 import { getTags } from '../actions/tagsActions'
+import { setFilter } from '../actions/notesActions'
 
 const SideBar = () => {
     const tagsListEl = useRef(null)
@@ -16,7 +17,13 @@ const SideBar = () => {
 
     const dispatch = useDispatch()
     const { isOpen: isOpenSidebar } = useSelector(state => state.sidebar)
-    const { isOpen: isOpenModal, modalContent } = useSelector(state => state.modal)
+    const { modalContent } = useSelector(state => state.modal)
+    const { 
+        filter: { 
+            name: filterNameFromState, 
+            id: filterIdFromState,
+        } 
+    } = useSelector(state => state.notes)
     const { tagsList } = useSelector(state => state.tags)
 
     console.log(modalContent)
@@ -31,11 +38,20 @@ const SideBar = () => {
     
     useEffect(() => {
         dispatch(getTags())
-    }, [dispatch])
+    }, [])
     
     useEffect(() => {
         if(!isOpenSidebar) tagsListEl.current.classList.add('hide-scroll')
     }, [isOpenSidebar])
+
+    const tagsListClickHandler = (e) => {
+        if(e.target.closest('[data-id]') && e.target.closest('[data-name]')) {
+            const { id, name } = e.target.closest('[data-id]').dataset
+            if(id !== filterIdFromState) {
+                dispatch(setFilter({ id, name }))
+            }
+        }
+    }
 
     return (
         <>
@@ -49,9 +65,12 @@ const SideBar = () => {
                     <ul 
                         ref={tagsListEl} 
                         className={"tags__list"}
+                        onClick={tagsListClickHandler}
                     >
                         <SideBarItem 
                             text='All'
+                            id='all'
+                            active={filterIdFromState === 'all'}
                         >
                             {
                                 <i className="fas fa-tag"></i>
@@ -62,6 +81,8 @@ const SideBar = () => {
                                 tagsList.map(t => (
                                     <SideBarItem 
                                         text={t.name}
+                                        id={t._id}
+                                        active={t._id === filterIdFromState}
                                         key={t._id}
                                     >
                                         {

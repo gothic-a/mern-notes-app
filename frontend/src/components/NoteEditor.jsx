@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
 
-const NoteEditor = ({variant}) => {
+const NoteEditor = ({variant, id}) => {
 
     const [title, setTitle] = useState('')
     const [text, setText] = useState('')
@@ -38,11 +38,7 @@ const NoteEditor = ({variant}) => {
     }
 
     const editorClickHandler = (e) => {
-
-        if(!e.target.closest('.tags-add') ) {
-            setTagsListOpen(false)
-        }
-
+        if(!e.target.closest('.tags-add')) setTagsListOpen(false)
     }
 
     const noteColors = [
