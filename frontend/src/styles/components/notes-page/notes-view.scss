@@ -17,10 +17,24 @@
     .notes-list {
         margin: $margin-s 0;
 
-        &__title {
-            text-transform: uppercase;
-            font-weight: $fw-regular;
-            margin-bottom: $margin-s;
+        &__header { 
+            display: flex;
+            flex-direction: row;
+            margin-bottom: 20px;
+            color: rgba($color-main, .85);
+
+            &-title {
+                text-transform: uppercase;
+                margin: 0;
+                font-weight: $fw-regular;
+            }
+
+            &-count {
+                align-self: flex-end;
+                margin-left: $margin-sm;
+                font-weight: $fw-medium;
+                color: $color-light;
+            }
         }
 
         &__grid {

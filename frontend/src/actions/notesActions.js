@@ -68,6 +68,42 @@ export const getNotes = (page = 1, filter = '', search = '') => async (dispatch,
     function fail(error) {dispatch({type: NOTES_GET_FAIL, payload: error})}
 }
 
+export const createNote = (note) => async (dispatch, getState) => {
+    request()
+
+    try {
+        const config = getConfig(getState(), 1)
+
+        const { data } = await axios.post(`/api/notes`, note, config)
+        success(data)
+    } catch(error) {
+        const payload = getError(error)
+        fail(payload)
+    }
+
+    function request() {dispatch({type: NOTE_CREATE_REQUEST})}
+    function success(note) {dispatch({type: NOTE_CREATE_SUCCESS, payload: note})}
+    function fail(error) {dispatch({type: NOTE_CREATE_FAIL, payload: error})}
+}
+
+export const deleteNote = (id) => async (dispatch, getState) => {
+    request()
+
+    try {
+        const config = getConfig(getState())
+
+        await axios.delete(`/api/notes/${id}`, config)
+        success(id)
+    } catch(error) {
+        const payload = getError(error)
+        fail(payload)
+    }
+
+    function request() {dispatch({type: NOTE_DELETE_REQUEST})}
+    function success(id) {dispatch({type: NOTE_DELETE_SUCCESS, payload: id})}
+    function fail(error) {dispatch({type: NOTE_DELETE_FAIL, payload: error})}
+}
+
 export const pageEncrease = () => {
     return { type: NOTES_LIST_PAGE_INCREASE }
 }

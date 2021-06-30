@@ -16,7 +16,8 @@ import {
     UPDATED_NOTE_SET,
     UPDATED_NOTE_RESET,
     NOTES_LIST_PAGE_INCREASE,
-    SET_FILTER
+    SET_FILTER,
+    SET_SEARCH_QUERY
 } from '../constants/notesConstants'
 
 const initialState = {
@@ -25,7 +26,8 @@ const initialState = {
         regular: []
     },
     page: 1,
-    totalCount: null,
+    regularCount: null,
+    pinnedCount: null,
     pagesCount: null,
     filter: {
         name: 'all',
@@ -40,7 +42,36 @@ const initialState = {
 
 const createNote = (state, action) => {
     const note = action.payload
-    return [note].concat(state.notesList)
+    return {
+        pinned: state.notesList.pinned,
+        regular: [note].concat(state.notesList.regular)
+    }
+}
+
+const deleteNote = (state, action) => {
+    const note = action.payload
+    let pidx = state.notesList.pinned.findIndex(n => n._id === note)
+    let ridx = state.notesList.regular.findIndex(n => n._id === note)
+
+    if(pidx > -1) {
+        return {
+            notesList: {
+                pinned: [...state.notesList.pinned.slice(0, pidx), ...state.notesList.pinned.slice(pidx + 1)],
+                regular: state.notesList.regular
+            },
+            pinnedCount: state.pinnedCount - 1,
+            regularCount: state.regularCount
+        }
+    } else {
+        return {
+            notesList: {
+                pinned: state.notesList.pinned,
+                regular: [...state.notesList.regular.slice(0, ridx), ...state.notesList.regular.slice(ridx + 1)]
+            },
+            regularCount: state.regularCount - 1,
+            pinnedCount: state.pinnedCount
+        }
+    }
 }
 
 const getNotes = (state, action) => { 
@@ -63,7 +94,8 @@ export const notesReducer = (state = initialState, action) => {
             return {
                 ...state,
                 notesList: getNotes(state, action),
-                totalCount: action.payload.count,
+                regularCount: action.payload.count,
+                pinnedCount: action.payload.pinnedCount,
                 pagesCount: action.payload.pagesCount,
                 getNotes: {
                     loading: false,
@@ -79,6 +111,60 @@ export const notesReducer = (state = initialState, action) => {
                 }
             }
         
+        case NOTE_CREATE_REQUEST: 
+            return {
+                ...state,
+                createNote: {
+                    loading: true,
+                }
+            }
+        case NOTE_CREATE_SUCCESS:
+            return {
+                ...state,
+                regularCount: state.regularCount + 1,
+                notesList: createNote(state, action),
+                createNote: {
+                    loading: false,
+                    success: true,
+                }
+            }
+        case NOTE_CREATE_FAIL:
+            return {
+                ...state,
+                createNote: {
+                    loading: false,
+                    error: action.payload,
+                }
+            }
+        
+        case NOTE_DELETE_REQUEST:
+            return {
+                ...state,
+                deleteNote: {
+                    loading: true,
+                }
+            }
+        case NOTE_DELETE_SUCCESS:
+            const { notesList, pinnedCount, regularCount } = deleteNote(state, action)
+            return {
+                ...state,
+                notesList: notesList,
+                deleteNote: {
+                    loading: false,
+                    success: true,
+                },
+                pinnedCount,
+                regularCount,
+            }
+        case NOTE_DELETE_FAIL: 
+            return {
+                ...state,
+                deleteNote: {
+                    loading: false,
+                    error: action.payload,
+                }
+            }
+
         case NOTES_LIST_PAGE_INCREASE: 
             return {
                 ...state,
@@ -87,16 +173,17 @@ export const notesReducer = (state = initialState, action) => {
 
         case SET_FILTER: 
             return {
-                ...state,
-                notesList: {
-                    pinned: [],
-                    regular: []   
-                },
+                ...initialState,
                 filter: {
                     name: action.payload.name,
                     id: action.payload.id
-                },
-                page: 1,
+                }
+            }
+
+        case SET_SEARCH_QUERY: 
+            return {
+                ...initialState,
+                search: action.payload,
             }
 
         case NOTES_LIST_RESET:

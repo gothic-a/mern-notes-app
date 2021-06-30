@@ -26,8 +26,6 @@ const SideBar = () => {
     } = useSelector(state => state.notes)
     const { tagsList } = useSelector(state => state.tags)
 
-    console.log(modalContent)
-
     const removeHideScroll = (e) => {
         if(e.propertyName === 'width') {
             if(isOpenSidebar) {

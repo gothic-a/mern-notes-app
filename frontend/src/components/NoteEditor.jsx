@@ -1,16 +1,30 @@
 import { useState, useEffect } from "react"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+
+import { createNote } from "../actions/notesActions"
 
 const NoteEditor = ({variant, id}) => {
-
     const [title, setTitle] = useState('')
     const [text, setText] = useState('')
     const [noteTagsList, setNoteTagsList] = useState([])
     const [color, setColor] = useState('#fff')
 
+    const dispatch = useDispatch()
+
     const [tagsListOpen, setTagsListOpen] = useState(false)
 
     const { tagsList: userTagsList } = useSelector(state => state.tags)
+
+    const createClickHandler = () => {
+        const note = {
+            title,
+            text,
+            tags: noteTagsList.map(t => t._id),
+            color
+        }
+
+        dispatch(createNote(note))
+    }
 
     const colorClickHandler = (e) => {
         if(e.target.dataset.color) setColor(e.target.dataset.color)
@@ -127,7 +141,14 @@ const NoteEditor = ({variant, id}) => {
                         onClick={userTagsClickHandler}
                     >
                         {
-                            userTagsList.map(t => <li className="user-tags-list__item" data-name={t.name} data-id={t._id}>{t.name}</li>)
+                            userTagsList.map(t => (
+                                <li 
+                                    className="user-tags-list__item" 
+                                    data-name={t.name} 
+                                    data-id={t._id}
+                                    key={t._id}
+                                >{t.name}</li>
+                            ))
                         }
                     </ul>
                 </div>
@@ -135,6 +156,7 @@ const NoteEditor = ({variant, id}) => {
             <div className="note-editor__send">
                 <button
                     className="note-editor__send-button"
+                    onClick={variant === 'create' ? createClickHandler : null}
                 >
                     <i className="fal fa-check add-tag__done"></i>
                     {
@@ -155,6 +177,7 @@ const NoteEditor = ({variant, id}) => {
                                 className={ color === c ? "colors-list__item active" : "colors-list__item" }
                                 style={{backgroundColor: c}}
                                 data-color={c}
+                                key={c}
                             ></li>
                         ))
                     }

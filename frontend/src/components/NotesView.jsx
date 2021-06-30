@@ -21,15 +21,14 @@ const NotesView = () => {
             id: filterId
         }, 
         search, 
-        totalCount,
+        regularCount,
+        pinnedCount,
         getNotes: {
             loading: getNotesLoading,
             success: getNotesSuccess,
         } 
     } = useSelector(state => state.notes)
     const dispatch = useDispatch() 
-
-    console.log(pagesCount)
 
     const pageUp = (e) => {
         if(e.target.scrollHeight - (e.target.offsetHeight + e.target.scrollTop) < 200) {
@@ -54,10 +53,22 @@ const NotesView = () => {
             ref={notesView}
         >
             {
-                pinned.length !== 0 && <NotesList title="pinned">{pinned}</NotesList>
+                pinned.length !== 0 && <NotesList title="pinned" count={pinnedCount}>{pinned}</NotesList>
             }
             {
-                regular.length !== 0 && <NotesList title={filterName}>{regular}</NotesList>
+                pinned.length !== 0 && regular.length === 0 
+                ? (
+                    null
+                ) : (
+                    <NotesList 
+                        title={filterName}
+                        count={regularCount}
+                    >
+                        { 
+                            regular.length !== 0 ? regular : []
+                        }
+                    </NotesList>
+                )
             }
         </div>
     )

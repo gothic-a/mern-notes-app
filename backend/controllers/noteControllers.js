@@ -17,13 +17,15 @@ export const createNote = asyncHandler(async (req, res) => {
         }
 
         if(tagsBelongToUser) {
-            const note = await Note.create({
+            let note = await Note.create({
                 ...data,
                 user: id
             })
 
             user.notes.push(note._id)
             user.save()
+
+            note = await note.populate('tags').execPopulate()
     
             res.status(200)
             res.json(note)
@@ -45,7 +47,7 @@ export const getNotes = asyncHandler(async (req, res) => {
 
     console.log(filter, search)
 
-    const filterQuery = () => filter ? { tags: filter } : ''
+    const filterQuery = () => filter ? { tags: { $in: filter} } : ''
 
     const searchQuery = () => {
         if(!search) return ''
@@ -76,15 +78,19 @@ export const getNotes = asyncHandler(async (req, res) => {
             .sort({createdAt: -1})
             .skip(pageSize * (page - 1))
             .limit(pageSize)
-            .populate('tags', ['_id', "name"])
+            .populate('tags')
             
         const pinned = await Note.find({user: req.user._id, pinned: true})
             .where({...filterQuery(), ...searchQuery()})
             .sort({updatedAt: -1})
             .populate('tags', ['_id', "name"])
+        
+        const pinnedCount = pinned.length
+
+        console.log(notes, pinned)
 
         res.status(200)
-        res.json({count, pinned, notes, page, pagesCount})
+        res.json({count, pinnedCount, pinned, notes, page, pagesCount, pageSize})
     } catch(error) {
         res.status(400)
         throw new Error(error.message)

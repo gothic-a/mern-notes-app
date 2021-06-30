@@ -1,10 +1,14 @@
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import Masonry from 'react-masonry-css'
+
+import { deleteNote } from '../actions/notesActions'
 
 import Note from "./Note"
 
-const NotesList = ({ title, children }) => {
+const NotesList = ({ title, children, count }) => {
     const { isOpen } = useSelector(state => state.sidebar)
+
+    const dispatch = useDispatch()
 
     const breakpointColumns = {
         default: isOpen ? 4 : 5,
@@ -13,10 +17,24 @@ const NotesList = ({ title, children }) => {
         768: 2,
         576: 1,
     }
+    
+    const notesListClickHandler = (e) => {
+        if(e.target.dataset.type === 'delete-note-icon') {
+            dispatch(deleteNote(e.target.closest('.note').dataset.id))
+        }
+    }
 
     return (
-        <div className="notes-list">
-            <h2 className="notes-list__title" >{title}</h2>
+        <div 
+            className="notes-list"
+            onClick={notesListClickHandler}
+        >
+
+            <div className="notes-list__header">
+                <h2 className="notes-list__header-title">{title}</h2>
+                <span className="notes-list__header-count">{count}</span>
+            </div>
+            
             <Masonry
                 breakpointCols={ breakpointColumns }
                 className='notes-list__grid'
