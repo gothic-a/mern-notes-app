@@ -34,6 +34,7 @@ const Note = ({ note }) => {
                     ></i>
                     <i 
                         className={ note.pinned ? "fas fa-thumbtack pin" : "far fa-thumbtack pin"}
+                        data-type="pin-note-icon"
                         onMouseOver={toggleIcon}
                         onMouseOut={toggleIcon}
                     ></i>

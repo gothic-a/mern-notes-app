@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useMemo } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import throttle from '../utils/throttle'
 
@@ -13,7 +13,7 @@ const NotesView = () => {
     const notesView = useRef(null)
     const { isOpen } = useSelector(state => state.sidebar)
     const { 
-        notesList: { pinned, regular }, 
+        notesList,
         page,
         pagesCount, 
         filter: {
@@ -28,6 +28,9 @@ const NotesView = () => {
             success: getNotesSuccess,
         } 
     } = useSelector(state => state.notes)
+    const pinned = useMemo(() => notesList.filter(n => n.pinned), [notesList])
+    const regular = useMemo(() => notesList.filter(n => !n.pinned), [notesList])
+
     const dispatch = useDispatch() 
 
     const pageUp = (e) => {
@@ -53,7 +56,7 @@ const NotesView = () => {
             ref={notesView}
         >
             {
-                pinned.length !== 0 && <NotesList title="pinned" count={pinnedCount}>{pinned}</NotesList>
+                pinned.length !== 0 && <NotesList title="pinned" count={pinned.length}>{pinned}</NotesList>
             }
             {
                 pinned.length !== 0 && regular.length === 0 

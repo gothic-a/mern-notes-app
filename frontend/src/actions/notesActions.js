@@ -86,7 +86,15 @@ export const createNote = (note) => async (dispatch, getState) => {
     function fail(error) {dispatch({type: NOTE_CREATE_FAIL, payload: error})}
 }
 
-export const deleteNote = (id) => async (dispatch, getState) => {
+export const updateNote = (note) => async(dispatch, getState) => {
+    
+
+    function request() {dispatch({type: NOTE_UPDATE_REQUEST})}
+    function success(note) {dispatch({type: NOTE_UPDATE_SUCCESS, payload: note})}
+    function fail(error) {dispatch({type: NOTE_UPDATE_FAIL, payload: error})}
+}
+
+export const deleteNote = (id) => async(dispatch, getState) => {
     request()
 
     try {

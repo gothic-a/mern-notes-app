@@ -21,10 +21,7 @@ import {
 } from '../constants/notesConstants'
 
 const initialState = {
-    notesList: {
-        pinned: [],
-        regular: []
-    },
+    notesList: [],
     page: 1,
     regularCount: null,
     pinnedCount: null,
@@ -40,45 +37,37 @@ const initialState = {
     deleteNote: {}
 }
 
+const getNotes = (state, action) => {
+    if(state.notesList.length > 0) {
+        return state.notesList.concat(action.payload.notes)
+    } else {
+        return action.payload.pinned.concat(action.payload.notes)
+    }
+}
+
+const updateNote = (state, action) => {
+    const idx = state.notesList.findIndex(n => n._id === action.payload.id)
+
+    return [
+        ...state.notesList.slice(0, idx),
+        action.payload,
+        ...state.notesList.sclice(idx + 1)
+    ]
+}
+
 const createNote = (state, action) => {
     const note = action.payload
-    return {
-        pinned: state.notesList.pinned,
-        regular: [note].concat(state.notesList.regular)
-    }
+    return [note].concat(state.notesList)
 }
 
 const deleteNote = (state, action) => {
     const note = action.payload
-    let pidx = state.notesList.pinned.findIndex(n => n._id === note)
-    let ridx = state.notesList.regular.findIndex(n => n._id === note)
+    const idx = state.notesList.findIndex(n => n._id === note)
 
-    if(pidx > -1) {
-        return {
-            notesList: {
-                pinned: [...state.notesList.pinned.slice(0, pidx), ...state.notesList.pinned.slice(pidx + 1)],
-                regular: state.notesList.regular
-            },
-            pinnedCount: state.pinnedCount - 1,
-            regularCount: state.regularCount
-        }
-    } else {
-        return {
-            notesList: {
-                pinned: state.notesList.pinned,
-                regular: [...state.notesList.regular.slice(0, ridx), ...state.notesList.regular.slice(ridx + 1)]
-            },
-            regularCount: state.regularCount - 1,
-            pinnedCount: state.pinnedCount
-        }
-    }
-}
-
-const getNotes = (state, action) => { 
-    return {
-        pinned: action.payload.pinned,
-        regular: state.notesList.regular.concat(action.payload.notes)
-    }
+   return [
+       ...state.notesList.slice(0, idx),
+       ...state.notesList.slice(idx + 1)
+   ]
 }
 
 export const notesReducer = (state = initialState, action) => {
@@ -136,6 +125,31 @@ export const notesReducer = (state = initialState, action) => {
                     error: action.payload,
                 }
             }
+
+        case NOTE_UPDATE_REQUEST:
+            return {
+                ...state,
+                updateNote: {
+                    loading: true,
+                }
+            }
+        case NOTE_UPDATE_SUCCESS:
+            return {
+                ...state,
+                notesList: updateNote(state, action),
+                updateNote: {
+                    loading: false,
+                    success: true,
+                }
+            }
+        case NOTE_UPDATE_FAIL:
+            return {
+                ...state,
+                updateNote: {
+                    loading: false,
+                    error: action.payload
+                }
+            }
         
         case NOTE_DELETE_REQUEST:
             return {
@@ -145,7 +159,7 @@ export const notesReducer = (state = initialState, action) => {
                 }
             }
         case NOTE_DELETE_SUCCESS:
-            const { notesList, pinnedCount, regularCount } = deleteNote(state, action)
+            const notesList = deleteNote(state, action)
             return {
                 ...state,
                 notesList: notesList,
@@ -153,8 +167,7 @@ export const notesReducer = (state = initialState, action) => {
                     loading: false,
                     success: true,
                 },
-                pinnedCount,
-                regularCount,
+                regularCount: state.regularCount - 1 
             }
         case NOTE_DELETE_FAIL: 
             return {
