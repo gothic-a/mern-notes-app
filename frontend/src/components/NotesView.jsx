@@ -4,12 +4,30 @@ import throttle from '../utils/throttle'
 
 import { 
     getNotes,
-    pageEncrease
+    pageEncrease,
+    deleteNote,
+    updateNote
 } from "../actions/notesActions"
 
 import NotesList from "./NotesList"
+import NoteEditor from './NoteEditor'
+import Modal from "./Modal"
+import { toggleModal } from "../actions/modalActions"
 
 const NotesView = () => {
+    const [updatedNote, setUpdatedNote] = useState(null)
+    const [modal, setModal] = useState({
+        isOpen: false,
+        content: ''
+    })
+
+    const closeModalHandler = () => {
+        setModal({
+            isOpen: false,
+            content: ''
+        })
+    }
+
     const notesView = useRef(null)
     const { isOpen } = useSelector(state => state.sidebar)
     const { 
@@ -38,7 +56,6 @@ const NotesView = () => {
             if(!getNotesLoading && (page < pagesCount)) dispatch(pageEncrease())
         }
     }
-
     const viewScrollHandler = throttle(pageUp, 200)
 
     useEffect(() => {
@@ -50,10 +67,33 @@ const NotesView = () => {
         dispatch(getNotes(page, filterId, search))
     }, [page, filterId, search])
 
+    const notesListClickHandler = (e) => {
+        if(e.target.dataset.type === 'delete-note-icon') {
+            dispatch(deleteNote(e.target.closest('.note').dataset.id))
+            return
+        }
+
+        if(e.target.dataset.type === 'pin-note-icon') {
+            const { id, pinned } = e.target.closest('.note').dataset
+            dispatch(updateNote(id, { pinned: pinned === 'false'}))
+            return
+        }
+
+        if(e.target.closest('.note')) {
+            setUpdatedNote(e.target.closest('.note').dataset.id)
+            setModal({
+                isOpen: true,
+                content: 'update note'
+            })
+        }
+    }
+
     return (
+        <>
         <div 
             className={isOpen ? 'notes-view' : 'notes-view sidebar_hidden'}
             ref={notesView}
+            onClick={notesListClickHandler}
         >
             {
                 pinned.length !== 0 && <NotesList title="pinned" count={pinned.length}>{pinned}</NotesList>
@@ -74,6 +114,21 @@ const NotesView = () => {
                 )
             }
         </div>
+        {
+            <Modal 
+                title={modal.content}
+                isOpen={modal.isOpen}
+                onClose={closeModalHandler}
+            >
+                {
+                    <NoteEditor 
+                        variant="update" 
+                        id={updatedNote}
+                    />
+                }
+            </Modal>
+        }
+        </>
     )
 }
 

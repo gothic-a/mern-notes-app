@@ -1,8 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux'
 import Masonry from 'react-masonry-css'
 
-import { deleteNote } from '../actions/notesActions'
-
 import Note from "./Note"
 
 const NotesList = ({ title, children, count }) => {
@@ -17,17 +15,10 @@ const NotesList = ({ title, children, count }) => {
         768: 2,
         576: 1,
     }
-    
-    const notesListClickHandler = (e) => {
-        if(e.target.dataset.type === 'delete-note-icon') {
-            dispatch(deleteNote(e.target.closest('.note').dataset.id))
-        }
-    }
 
     return (
         <div 
             className="notes-list"
-            onClick={notesListClickHandler}
         >
 
             <div className="notes-list__header">

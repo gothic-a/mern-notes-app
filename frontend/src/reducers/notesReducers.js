@@ -46,12 +46,12 @@ const getNotes = (state, action) => {
 }
 
 const updateNote = (state, action) => {
-    const idx = state.notesList.findIndex(n => n._id === action.payload.id)
+    const idx = state.notesList.findIndex(n => n._id === action.payload._id)
 
     return [
         ...state.notesList.slice(0, idx),
         action.payload,
-        ...state.notesList.sclice(idx + 1)
+        ...state.notesList.slice(idx + 1)
     ]
 }
 

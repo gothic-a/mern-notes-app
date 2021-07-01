@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
-import { createNote } from "../actions/notesActions"
+import { createNote, updateNote } from "../actions/notesActions"
 
 const NoteEditor = ({variant, id}) => {
     const [title, setTitle] = useState('')
@@ -12,8 +12,21 @@ const NoteEditor = ({variant, id}) => {
     const dispatch = useDispatch()
 
     const [tagsListOpen, setTagsListOpen] = useState(false)
-
     const { tagsList: userTagsList } = useSelector(state => state.tags)
+    const { notesList } = useSelector(state => state.notes)
+
+    useEffect(() => {
+        if(variant === 'update') {
+            notesList.find(n => {
+                if(n._id === id) {
+                    setTitle(n.title)
+                    setText(n.text)
+                    setNoteTagsList(n.tags)
+                    setColor(n.color)
+                }
+            })
+        }
+    }, [id])
 
     const createClickHandler = () => {
         const note = {
@@ -24,6 +37,17 @@ const NoteEditor = ({variant, id}) => {
         }
 
         dispatch(createNote(note))
+    }
+
+    const updateClickhandler = () => {
+        const note = {
+            title, 
+            text,
+            tags: noteTagsList.map(n => n._id),
+            color
+        }
+
+        dispatch(updateNote(id, note))
     }
 
     const colorClickHandler = (e) => {
@@ -99,7 +123,11 @@ const NoteEditor = ({variant, id}) => {
                         >
                             {
                                 noteTagsList.map(t => (
-                                    <li className="note-tags-list__item" data-id={t._id}>
+                                    <li 
+                                        className="note-tags-list__item" 
+                                        data-id={t._id}
+                                        key={t._id}
+                                    >
                                         <i className="fas fa-tag tag-icon"></i>
                                         <span>{t.name}</span>
                                         <i className="fal fa-times delete-icon"></i>
@@ -118,7 +146,6 @@ const NoteEditor = ({variant, id}) => {
                         className="tags-add__header"
                         onClick={() => {
                             setTagsListOpen(true)
-                            console.log('click')
                         }}
                     >
                         {
@@ -156,7 +183,7 @@ const NoteEditor = ({variant, id}) => {
             <div className="note-editor__send">
                 <button
                     className="note-editor__send-button"
-                    onClick={variant === 'create' ? createClickHandler : null}
+                    onClick={variant === 'create' ? createClickHandler : updateClickhandler}
                 >
                     <i className="fal fa-check add-tag__done"></i>
                     {

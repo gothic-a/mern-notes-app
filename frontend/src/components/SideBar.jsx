@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 
 import Tag from "./Tag"
@@ -12,6 +12,18 @@ import { getTags } from '../actions/tagsActions'
 import { setFilter } from '../actions/notesActions'
 
 const SideBar = () => {
+    const [modal, setModal] = useState({
+        isOpen: false,
+        content: ''
+    })
+
+    const closeModalHandler = () => {
+        setModal({
+            isOpen: false,
+            content: ''
+        })
+    }
+
     const tagsListEl = useRef(null)
     const sideBar = useRef(null)
 
@@ -95,7 +107,7 @@ const SideBar = () => {
                 <div className="sidebar__controls">
                     <SideBarItem 
                         text="Add Note"
-                        onClickHandler={() => dispatch(toggleModal('open', 'note editor'))}
+                        onClickHandler={() => setModal({isOpen: true, content: 'create note'})}
                     >
                         {
                             <i className="far fa-plus"></i>
@@ -103,7 +115,7 @@ const SideBar = () => {
                     </SideBarItem>
                     <SideBarItem 
                         text="Change Tags"
-                        onClickHandler={() => dispatch(toggleModal('open', 'change tags'))}
+                        onClickHandler={() => setModal({isOpen: true, content: 'change tags'})}
                     >
                         {
                             <i className="fas fa-pen"></i>
@@ -113,15 +125,17 @@ const SideBar = () => {
                 
             </div>
             {
-               <Modal title={modalContent}>
-                   {
-                        modalContent === 'change tags' 
-                            ? <TagsEditor />
-                            : <NoteEditor variant="create" />
-
-                   }
-                   
-               </Modal>
+                <Modal 
+                    title={modal.content}
+                    isOpen={modal.isOpen}
+                    onClose={closeModalHandler}
+                >
+                    {
+                            modal.content === 'change tags' 
+                                ? <TagsEditor />
+                                : <NoteEditor variant="create" />
+                    }
+                </Modal>
             }
         </>
     )

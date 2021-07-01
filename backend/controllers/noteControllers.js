@@ -100,8 +100,10 @@ export const updateNote = asyncHandler(async (req, res) => {
     const { id } = req.params
     const note = { ...req.body }
 
+    console.log(id, note)
     try {
         const updatedNote = await Note.findByIdAndUpdate(id, note, { new: true, useFindAndModify: false })
+            .populate('tags', ['name', '_id'])
 
         res.json(updatedNote)
     } catch(error) {

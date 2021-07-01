@@ -86,8 +86,21 @@ export const createNote = (note) => async (dispatch, getState) => {
     function fail(error) {dispatch({type: NOTE_CREATE_FAIL, payload: error})}
 }
 
-export const updateNote = (note) => async(dispatch, getState) => {
-    
+export const updateNote = (id, note) => async(dispatch, getState) => {
+
+    console.log(id, note)
+
+    request()
+
+    try {
+        const config = getConfig(getState(), 1)
+
+        const { data } = await axios.put(`/api/notes/${id}`, note, config)
+        success(data)
+    } catch(error) {
+        const payload = getError(error)
+        fail(payload)
+    }
 
     function request() {dispatch({type: NOTE_UPDATE_REQUEST})}
     function success(note) {dispatch({type: NOTE_UPDATE_SUCCESS, payload: note})}
