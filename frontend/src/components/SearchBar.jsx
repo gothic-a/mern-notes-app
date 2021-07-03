@@ -2,21 +2,7 @@ import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
 import { setSearchQuery } from "../actions/notesActions"
-
-const useDebounce = (value) => {
-    const [debouncedValue, setDebauncedValue] = useState('') 
-
-    useEffect(() => {
-
-        const timeout = setTimeout(() => {
-            return setDebauncedValue(value)
-        }, 400)
-
-        return () => clearTimeout(timeout)
-    })
-
-    return debouncedValue
-}
+import useDebounce from '../utils/useDebounce'
 
 const SearchBar = () => {
     const { getNotes: { loading } } = useSelector(state => state.notes)

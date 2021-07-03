@@ -4,22 +4,21 @@ import {
     NOTES_GET_REQUEST,
     NOTES_GET_SUCCESS,
     NOTES_GET_FAIL,
+    NOTES_GET_FETCHING_PROGRESS,
     NOTE_CREATE_REQUEST,
     NOTE_CREATE_SUCCESS,
     NOTE_CREATE_FAIL,
     NOTE_UPDATE_REQUEST,
     NOTE_UPDATE_SUCCESS,
     NOTE_UPDATE_FAIL,
-    NOTE_UPDATE_RESET,
     NOTE_DELETE_REQUEST,
     NOTE_DELETE_SUCCESS,
     NOTE_DELETE_FAIL,
-    UPDATED_NOTE_SET,
-    UPDATED_NOTE_RESET,
     NOTES_LIST_PAGE_INCREASE,
     SET_FILTER,
     SET_SEARCH_QUERY,
 } from '../constants/notesConstants'
+import { download, upload } from '../utils/onProgress'
 
 const getConfig = ({ userLogin }, isContent = false) => {
     const { userData: { token } } = userLogin
@@ -29,12 +28,6 @@ const getConfig = ({ userLogin }, isContent = false) => {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
         },
-    }
-
-    if(isContent) {
-        config.onUploadProgress = (progressEvent) => console.log(progressEvent)
-    } else {
-        config.onDownloadProgress = (progressEvent) => console.log(progressEvent)
     }
 
     return config
@@ -55,6 +48,7 @@ export const getNotes = (page = 1, filter = '', search = '') => async (dispatch,
 
     try {
         const config = getConfig(getState())
+        config.onDownloadProgress = download(progress)
 
         const { data } = await axios.get(`/api/notes?page=${page}&filter=${filter}&search=${search}`, config)
         success(data)
@@ -66,6 +60,7 @@ export const getNotes = (page = 1, filter = '', search = '') => async (dispatch,
     function request() {dispatch({type: NOTES_GET_REQUEST})}
     function success(data) {dispatch({type: NOTES_GET_SUCCESS, payload: data})}
     function fail(error) {dispatch({type: NOTES_GET_FAIL, payload: error})}
+    function progress(percent) {dispatch({type: NOTES_GET_FETCHING_PROGRESS, payload: percent})}
 }
 
 export const createNote = (note) => async (dispatch, getState) => {

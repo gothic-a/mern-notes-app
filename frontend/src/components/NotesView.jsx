@@ -8,11 +8,12 @@ import {
     deleteNote,
     updateNote
 } from "../actions/notesActions"
+import { toggleModal } from "../actions/modalActions"
 
 import NotesList from "./NotesList"
 import NoteEditor from './NoteEditor'
 import Modal from "./Modal"
-import { toggleModal } from "../actions/modalActions"
+import ProgressBar from "./ProgressBar"
 
 const NotesView = () => {
     const [updatedNote, setUpdatedNote] = useState(null)
@@ -28,7 +29,7 @@ const NotesView = () => {
         })
     }
 
-    const notesView = useRef(null)
+    const notesView = useRef('')
     const { isOpen } = useSelector(state => state.sidebar)
     const { 
         notesList,
@@ -40,10 +41,9 @@ const NotesView = () => {
         }, 
         search, 
         regularCount,
-        pinnedCount,
         getNotes: {
             loading: getNotesLoading,
-            success: getNotesSuccess,
+            progress: getNotesProgress
         } 
     } = useSelector(state => state.notes)
     const pinned = useMemo(() => notesList.filter(n => n.pinned), [notesList])
@@ -56,12 +56,8 @@ const NotesView = () => {
             if(!getNotesLoading && (page < pagesCount)) dispatch(pageEncrease())
         }
     }
-    const viewScrollHandler = throttle(pageUp, 200)
 
-    useEffect(() => {
-        notesView.current.addEventListener('scroll', viewScrollHandler)
-        return () => notesView.current.removeEventListener('scroll', viewScrollHandler)
-    }, [page, pagesCount])
+    const viewScrollHandler = throttle(pageUp, 500)
 
     useEffect(() => {
         dispatch(getNotes(page, filterId, search))
@@ -90,10 +86,14 @@ const NotesView = () => {
 
     return (
         <>
+        {
+            <ProgressBar progress={getNotesProgress} isFetching={getNotesLoading}/>
+        }
         <div 
             className={isOpen ? 'notes-view' : 'notes-view sidebar_hidden'}
             ref={notesView}
             onClick={notesListClickHandler}
+            onScroll={viewScrollHandler}
         >
             {
                 pinned.length !== 0 && <NotesList title="pinned" count={pinned.length}>{pinned}</NotesList>

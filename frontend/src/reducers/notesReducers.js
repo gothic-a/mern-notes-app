@@ -3,18 +3,16 @@ import {
     NOTES_GET_REQUEST,
     NOTES_GET_SUCCESS,
     NOTES_GET_FAIL,
+    NOTES_GET_FETCHING_PROGRESS,
     NOTE_CREATE_REQUEST,
     NOTE_CREATE_SUCCESS,
     NOTE_CREATE_FAIL,
     NOTE_UPDATE_REQUEST,
     NOTE_UPDATE_SUCCESS,
     NOTE_UPDATE_FAIL,
-    NOTE_UPDATE_RESET,
     NOTE_DELETE_REQUEST,
     NOTE_DELETE_SUCCESS,
     NOTE_DELETE_FAIL,
-    UPDATED_NOTE_SET,
-    UPDATED_NOTE_RESET,
     NOTES_LIST_PAGE_INCREASE,
     SET_FILTER,
     SET_SEARCH_QUERY
@@ -76,7 +74,8 @@ export const notesReducer = (state = initialState, action) => {
             return {
                 ...state,
                 getNotes: {
-                    loading: true
+                    loading: true,
+                    progress: 0,
                 }
             }
         case NOTES_GET_SUCCESS:
@@ -89,6 +88,7 @@ export const notesReducer = (state = initialState, action) => {
                 getNotes: {
                     loading: false,
                     success: true,
+                    progress: 100
                 }
             }
         case NOTES_GET_FAIL: 
@@ -97,6 +97,15 @@ export const notesReducer = (state = initialState, action) => {
                 getNotes: {
                     loading: false,
                     error: action.payload,
+                    progress: 100
+                }
+            }
+        case NOTES_GET_FETCHING_PROGRESS:
+            return {
+                ...state,
+                getNotes: {
+                    ...state.getNotes,
+                    progress: action.payload,
                 }
             }
         

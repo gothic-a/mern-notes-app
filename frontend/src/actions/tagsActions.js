@@ -14,7 +14,6 @@ import {
     TAG_DELETE_SUCCESS,
     TAG_DELETE_FAIL,
 } from '../constants/tagsConstants'
-import onProgress from '../utils/onUpladProgress'
 
 const getConfig = ({ userLogin }, isContent = false) => {
     const { userData: { token } } = userLogin
@@ -24,12 +23,6 @@ const getConfig = ({ userLogin }, isContent = false) => {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
         },
-    }
-
-    if(isContent) {
-        config.onUploadProgress = (progressEvent) => console.log(progressEvent)
-    } else {
-        config.onDownloadProgress = (progressEvent) => console.log(progressEvent)
     }
 
     return config

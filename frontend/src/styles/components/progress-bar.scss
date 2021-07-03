@@ -1,0 +1,14 @@
+.progress-bar {
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 5px;
+    z-index: 100000;
+
+    &__line {
+        background-color: rgba($color-main, .9);
+        height: 100%;
+        transition: width .75s;
+    }
+}

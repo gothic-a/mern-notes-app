@@ -77,7 +77,7 @@ export const getNotes = asyncHandler(async (req, res) => {
             .sort({createdAt: -1})
             .skip(pageSize * (page - 1))
             .limit(pageSize)
-            .populate('tags')
+            .populate('tags', ['_id', "name"])
             
         const pinned = await Note.find({user: req.user._id, pinned: true})
             .where({...filterQuery(), ...searchQuery()})
@@ -87,9 +87,20 @@ export const getNotes = asyncHandler(async (req, res) => {
         const pagesCount = Math.ceil((count - pinned.length) / pageSize)
 
         const pinnedCount = pinned.length
-
+        const response = {
+            count,
+            pinnedCount,
+            pinned,
+            notes,
+            page,
+            pagesCount,
+            pageSize
+        } 
+        const contentLength = JSON.stringify(response).length
+        console.log(contentLength)
+        res.append('x-content-length', contentLength)
         res.status(200)
-        res.json({count, pinnedCount, pinned, notes, page, pagesCount, pageSize})
+        res.json({...response})
     } catch(error) {
         res.status(400)
         throw new Error(error.message)

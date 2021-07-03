@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom'
 import Header from '../components/Header'
 import SideBar from '../components/SideBar'
 import NotesView from '../components/NotesView'
+import ProgressBar from '../components/ProgressBar'
 
 const NotesPage = () => {
 
