@@ -1,6 +1,5 @@
 import axios from 'axios'
 import {
-    NOTES_LIST_RESET,
     NOTES_GET_REQUEST,
     NOTES_GET_SUCCESS,
     NOTES_GET_FAIL,
@@ -17,6 +16,8 @@ import {
     NOTES_LIST_PAGE_INCREASE,
     SET_FILTER,
     SET_SEARCH_QUERY,
+    EDITING_NOTE_SET,
+    EDITING_NOTE_RESET
 } from '../constants/notesConstants'
 import { download, upload } from '../utils/onProgress'
 
@@ -70,20 +71,18 @@ export const createNote = (note) => async (dispatch, getState) => {
         const config = getConfig(getState(), 1)
 
         const { data } = await axios.post(`/api/notes`, note, config)
-        success(data)
+        return success(data)
     } catch(error) {
         const payload = getError(error)
-        fail(payload)
+        return fail(payload)
     }
 
-    function request() {dispatch({type: NOTE_CREATE_REQUEST})}
-    function success(note) {dispatch({type: NOTE_CREATE_SUCCESS, payload: note})}
-    function fail(error) {dispatch({type: NOTE_CREATE_FAIL, payload: error})}
+    function request() {return dispatch({type: NOTE_CREATE_REQUEST})}
+    function success(note) {return dispatch({type: NOTE_CREATE_SUCCESS, payload: note})}
+    function fail(error) {return dispatch({type: NOTE_CREATE_FAIL, payload: error})}
 }
 
 export const updateNote = (id, note) => async(dispatch, getState) => {
-
-    console.log(id, note)
 
     request()
 
@@ -91,15 +90,20 @@ export const updateNote = (id, note) => async(dispatch, getState) => {
         const config = getConfig(getState(), 1)
 
         const { data } = await axios.put(`/api/notes/${id}`, note, config)
-        success(data)
+        return success(data)
     } catch(error) {
         const payload = getError(error)
         fail(payload)
     }
 
-    function request() {dispatch({type: NOTE_UPDATE_REQUEST})}
-    function success(note) {dispatch({type: NOTE_UPDATE_SUCCESS, payload: note})}
-    function fail(error) {dispatch({type: NOTE_UPDATE_FAIL, payload: error})}
+    function request() { return dispatch({type: NOTE_UPDATE_REQUEST})}
+    function success(note) { return dispatch({type: NOTE_UPDATE_SUCCESS, payload: note})}
+    function fail(error) { return dispatch({type: NOTE_UPDATE_FAIL, payload: error})}
+}
+
+export const setEditingNote = (id) => {
+    if (id) return { type: EDITING_NOTE_SET, payload: id }
+    else return { type: EDITING_NOTE_RESET }
 }
 
 export const deleteNote = (id) => async(dispatch, getState) => {

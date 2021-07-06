@@ -1,6 +1,7 @@
 import asyncHandler from 'express-async-handler'
 
 import User from '../models/userModel.js'
+import Note from '../models/noteModel.js'
 import Tag from '../models/tagModel.js'
 
 export const createTag = asyncHandler(async (req, res) => {
@@ -80,10 +81,21 @@ export const deleteTag = asyncHandler(async (req, res) => {
         user.tags = newTags
         user.save() 
 
+        const notes = await Note.find({user: req.user._id, tags: { $in: id }})
+        notes.forEach(n => {
+            const tIdx = n.tags.findIndex(t => t.toString() === id)
+            const newTags = [
+                ...n.tags.slice(0, tIdx),
+                ...n.tags.slice(tIdx + 1)
+            ]
+            n.tags = newTags
+            n.save()
+        })
+
         res.status(200)
         res.json('success')
     } catch (error) {
         res.status(400)
-        throw new Error('Incorrect tag id')
+        throw new Error(error.message)
     }
 })

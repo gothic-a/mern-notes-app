@@ -6,28 +6,15 @@ import {
     getNotes,
     pageEncrease,
     deleteNote,
-    updateNote
+    updateNote,
+    setEditingNote
 } from "../actions/notesActions"
 import { toggleModal } from "../actions/modalActions"
 
 import NotesList from "./NotesList"
-import NoteEditor from './NoteEditor'
-import Modal from "./Modal"
 import ProgressBar from "./ProgressBar"
 
 const NotesView = () => {
-    const [updatedNote, setUpdatedNote] = useState(null)
-    const [modal, setModal] = useState({
-        isOpen: false,
-        content: ''
-    })
-
-    const closeModalHandler = () => {
-        setModal({
-            isOpen: false,
-            content: ''
-        })
-    }
 
     const notesView = useRef('')
     const { isOpen } = useSelector(state => state.sidebar)
@@ -76,11 +63,8 @@ const NotesView = () => {
         }
 
         if(e.target.closest('.note')) {
-            setUpdatedNote(e.target.closest('.note').dataset.id)
-            setModal({
-                isOpen: true,
-                content: 'update note'
-            })
+            dispatch(setEditingNote(e.target.closest('.note').dataset.id))
+            dispatch(toggleModal('open', 'edit note'))
         }
     }
 
@@ -114,7 +98,7 @@ const NotesView = () => {
                 )
             }
         </div>
-        {
+        {/* {
             <Modal 
                 title={modal.content}
                 isOpen={modal.isOpen}
@@ -127,7 +111,7 @@ const NotesView = () => {
                     />
                 }
             </Modal>
-        }
+        } */}
         </>
     )
 }

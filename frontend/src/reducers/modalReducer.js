@@ -11,7 +11,6 @@ export const modalReducer = (state = { isOpen: false }, action) => {
                 modalContent: action.payload,
             }
         case SET_MODAL_CLOSE:
-            console.log(state)
             return {
                 ...state,
                 isOpen: false

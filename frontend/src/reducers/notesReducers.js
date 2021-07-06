@@ -15,7 +15,9 @@ import {
     NOTE_DELETE_FAIL,
     NOTES_LIST_PAGE_INCREASE,
     SET_FILTER,
-    SET_SEARCH_QUERY
+    SET_SEARCH_QUERY,
+    EDITING_NOTE_SET,
+    EDITING_NOTE_RESET
 } from '../constants/notesConstants'
 
 const initialState = {
@@ -32,7 +34,7 @@ const initialState = {
     getNotes: {},
     createNote: {},
     updateNote: {},
-    deleteNote: {}
+    deleteNote: {},
 }
 
 const getNotes = (state, action) => {
@@ -135,6 +137,16 @@ export const notesReducer = (state = initialState, action) => {
                 }
             }
 
+        case EDITING_NOTE_SET:  
+            return {
+                    ...state,
+                    editingNote: action.payload,
+                }
+        case EDITING_NOTE_RESET: 
+            return {
+                ...state,
+                editingNote: null,
+            }
         case NOTE_UPDATE_REQUEST:
             return {
                 ...state,

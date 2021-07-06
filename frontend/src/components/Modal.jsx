@@ -2,25 +2,25 @@ import { useEffect, useRef} from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { toggleModal } from "../actions/modalActions"
 
-const Modal = ({ children, title, isOpen = false, onClose}) => {
+const Modal = ({ children, title }) => {
 
     const modal = useRef(null)
 
-    // const dispatch = useDispatch()
-    // const { isOpen } = useSelector(state => state.modal)
+    const dispatch = useDispatch()
+    const { isOpen } = useSelector(state => state.modal)
 
     useEffect(() => {
         document.body.style.overflowY =  isOpen ? 'hidden' : 'auto'
         if(isOpen) modal.current.classList.add('modal_visible') 
+        if(!isOpen) modal.current.classList.remove('modal_visible')
     }, [isOpen])
 
     const closeClickHandler = (e) => {
         e.stopPropagation()
         if(isOpen && e.target.dataset.type === 'close-modal') {
-            modal.current.classList.remove('modal_visible')
-            onClose()
+            dispatch(toggleModal())
         }
-    }
+    } 
  
     return (
         <div 

@@ -12,17 +12,6 @@ import { getTags } from '../actions/tagsActions'
 import { setFilter } from '../actions/notesActions'
 
 const SideBar = () => {
-    const [modal, setModal] = useState({
-        isOpen: false,
-        content: ''
-    })
-
-    const closeModalHandler = () => {
-        setModal({
-            isOpen: false,
-            content: ''
-        })
-    }
 
     const tagsListEl = useRef(null)
     const sideBar = useRef(null)
@@ -107,7 +96,7 @@ const SideBar = () => {
                 <div className="sidebar__controls">
                     <SideBarItem 
                         text="Add Note"
-                        onClickHandler={() => setModal({isOpen: true, content: 'create note'})}
+                        onClickHandler={() => dispatch(toggleModal('open', 'create note'))}
                     >
                         {
                             <i className="far fa-plus"></i>
@@ -115,7 +104,7 @@ const SideBar = () => {
                     </SideBarItem>
                     <SideBarItem 
                         text="Change Tags"
-                        onClickHandler={() => setModal({isOpen: true, content: 'change tags'})}
+                        onClickHandler={() => dispatch(toggleModal('open', 'change tags'))}
                     >
                         {
                             <i className="fas fa-pen"></i>
@@ -126,14 +115,13 @@ const SideBar = () => {
             </div>
             {
                 <Modal 
-                    title={modal.content}
-                    isOpen={modal.isOpen}
-                    onClose={closeModalHandler}
+                    title={modalContent}
                 >
                     {
-                            modal.content === 'change tags' 
-                                ? <TagsEditor />
-                                : <NoteEditor variant="create" />
+                            modalContent === 'change tags' ? <TagsEditor />
+                            : modalContent === 'create note' ? <NoteEditor variant="create" />
+                            : modalContent === 'edit note' ? <NoteEditor variant="update" />
+                            : null
                     }
                 </Modal>
             }

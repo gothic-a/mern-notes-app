@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import { toggleModal } from "../actions/modalActions"
 
 import { createNote, updateNote } from "../actions/notesActions"
 
-const NoteEditor = ({variant, id}) => {
+const NoteEditor = ({variant}) => {
     const [title, setTitle] = useState('')
     const [text, setText] = useState('')
     const [noteTagsList, setNoteTagsList] = useState([])
@@ -13,12 +14,21 @@ const NoteEditor = ({variant, id}) => {
 
     const [tagsListOpen, setTagsListOpen] = useState(false)
     const { tagsList: userTagsList } = useSelector(state => state.tags)
-    const { notesList } = useSelector(state => state.notes)
+    const { 
+        notesList,
+        editingNote,
+        createNote: {
+
+        },
+        updateNote: {
+
+        }
+    } = useSelector(state => state.notes)
 
     useEffect(() => {
         if(variant === 'update') {
             notesList.find(n => {
-                if(n._id === id) {
+                if(n._id === editingNote) {
                     setTitle(n.title)
                     setText(n.text)
                     setNoteTagsList(n.tags)
@@ -26,9 +36,18 @@ const NoteEditor = ({variant, id}) => {
                 }
             })
         }
-    }, [id])
 
-    const createClickHandler = () => {
+        return () => resetState()
+    }, [editingNote, variant])
+
+    const resetState = () => {
+        setTitle('')
+        setText('')
+        setNoteTagsList([])
+        setColor('#fff')
+    }
+
+    const createClickHandler = async () => {
         const note = {
             title,
             text,
@@ -36,10 +55,13 @@ const NoteEditor = ({variant, id}) => {
             color
         }
 
-        dispatch(createNote(note))
+        const res = await dispatch(createNote(note))
+        if(res) {
+            dispatch(toggleModal())
+        }
     }
 
-    const updateClickhandler = () => {
+    const updateClickhandler = async() => {
         const note = {
             title, 
             text,
@@ -47,7 +69,10 @@ const NoteEditor = ({variant, id}) => {
             color
         }
 
-        dispatch(updateNote(id, note))
+        const res = await dispatch(updateNote(editingNote, note))
+        if(res) {
+            dispatch(toggleModal())
+        }
     }
 
     const colorClickHandler = (e) => {
