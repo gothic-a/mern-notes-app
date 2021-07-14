@@ -82,15 +82,14 @@
         }
 
         .loader-container {
-            position: absolute;
-            width: 30px;
-            height: 30px;
+            position: absolute !important;
             top: 50%;
             transform: translateY(-50%);
             right: 15px;
 
             &__spinner {
-                border-width: 3.5px !important;
+                border-width: 3px !important;
+                border-color: white;
             }
             
         }

@@ -32,6 +32,7 @@ const NotesView = () => {
             loading: getNotesLoading,
             progress: getNotesProgress
         },
+        fetching 
     } = useSelector(state => state.notes)
     const pinned = useMemo(() => notesList.filter(n => n.pinned), [notesList])
     const regular = useMemo(() => notesList.filter(n => !n.pinned), [notesList])
@@ -77,9 +78,8 @@ const NotesView = () => {
             onScroll={viewScrollHandler}
         >
             {
-                pinned.length === 0 && regular.length === 0 
-                    ? <EmptyScreen>you can add new notes!</EmptyScreen>
-                    : <>
+                pinned.length !== 0 || regular.length !== 0 && !getNotesLoading
+                    ? <>
                         {
                             pinned.length !== 0 && <NotesList title="pinned" count={pinned.length}>{pinned}</NotesList>
                         }
@@ -99,6 +99,7 @@ const NotesView = () => {
                             )
                         }
                     </>
+                    : !getNotesLoading && <EmptyScreen>you can add new notes!</EmptyScreen>
             }
             
         </div>

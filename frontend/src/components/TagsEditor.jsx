@@ -9,6 +9,7 @@ import {
 } from '../actions/tagsActions'
 
 import EmptyScreen from './EmptyScreen'
+import Loader from './Loader'
 
 const TagsEditor = () => {
     const dispatch = useDispatch()
@@ -19,7 +20,13 @@ const TagsEditor = () => {
         tagsUpdate: { 
             loading: updateLoading, 
             success: updateSuccess 
-        } 
+        },
+        tagsCreate: { 
+            loading: createLoading, 
+        },
+        tagsDelete: { 
+            loading: deleteLoading, 
+        }  
     } = useSelector(state => state.tags)
 
     const [editable, setEditable] = useState(false)
@@ -157,10 +164,16 @@ const TagsEditor = () => {
                     onChange={e => setNewTag(e.target.value)}
                     placeholder="add new tag"
                 />
-                <i 
-                    className="far fa-check add-tag__done"
-                    onClick={addClickHandler}
-                ></i>
+                {
+                    updateLoading || deleteLoading || createLoading 
+                        ? <Loader></Loader>
+                        : (
+                            <i 
+                                className="far fa-check add-tag__done"
+                                onClick={addClickHandler}
+                            ></i>
+                        )
+                }
             </div>
         </div>
     )

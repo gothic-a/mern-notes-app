@@ -12,6 +12,7 @@ import {
     TAG_DELETE_REQUEST,
     TAG_DELETE_SUCCESS,
     TAG_DELETE_FAIL,
+    TAGS_RESET
 } from '../constants/tagsConstants'
 
 const initialState = {
@@ -86,7 +87,7 @@ export const tagsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 tagsList: addTag(state, action),
-                tagCreate: {
+                tagsCreate: {
                     loading: false,
                     success: true,
                 }
@@ -154,6 +155,9 @@ export const tagsReducer = (state = initialState, action) => {
                     error: action.payload
                 }
             }
+        
+        case TAGS_RESET: 
+            return initialState
         
         default: 
             return state

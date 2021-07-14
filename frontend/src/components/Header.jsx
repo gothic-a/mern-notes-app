@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { userLogout } from '../actions/userActions'
 import { sidebarToggle } from '../actions/sidebarAction'
+import { resetTags } from '../actions/tagsActions'
 
 import SearchBar from './SearchBar'
 import ProgressBar from "./ProgressBar"
@@ -24,6 +25,8 @@ const Header = () => {
     }
 
     const logoutClickHandler = () => {
+
+        dispatch(resetTags())
         dispatch(userLogout())
         history.push('/identity')
     }

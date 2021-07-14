@@ -138,13 +138,19 @@
         &__done {
             font-size: $base-fz * 1.75;
             cursor: pointer;
-            padding: $padding-sm;
+            margin-right: $padding-sm;
             color: rgba($color-main, .9);
             transition: .2s;
+            height: 100%;
             
             &:hover {
                 opacity: .75;
             }
+        }
+
+        .loader {
+            margin-right: $margin-sm;
+            height: 100%;
         }
     }
 

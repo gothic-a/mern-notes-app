@@ -13,6 +13,7 @@ import {
     TAG_DELETE_REQUEST,
     TAG_DELETE_SUCCESS,
     TAG_DELETE_FAIL,
+    TAGS_RESET
 } from '../constants/tagsConstants'
 
 const getConfig = ({ userLogin }, isContent = false) => {
@@ -107,3 +108,8 @@ export const updateTag = ({id, newName}) => async (dispatch, getState) => {
 }
 
 export const resetUpdate = () => ({type: TAG_UPDATE_RESET})
+
+export const resetTags = () => {
+    console.log('logout')
+    return { type: TAGS_RESET }
+}

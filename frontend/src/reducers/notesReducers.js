@@ -83,7 +83,6 @@ export const notesReducer = (state = initialState, action) => {
                 ...state,
                 getNotes: {
                     loading: true,
-                    progress: 0,
                 },
                 fetching: {
                     loading: true,
@@ -100,7 +99,6 @@ export const notesReducer = (state = initialState, action) => {
                 getNotes: {
                     loading: false,
                     success: true,
-                    progress: 100
                 },
                 fetching: {
                     loading: false,
@@ -113,7 +111,6 @@ export const notesReducer = (state = initialState, action) => {
                 getNotes: {
                     loading: false,
                     error: action.payload,
-                    progress: 100
                 },
                 fetching: {
                     loading: false,
@@ -135,7 +132,6 @@ export const notesReducer = (state = initialState, action) => {
                 ...state,
                 createNote: {
                     loading: true,
-                    progress: 0,
                 },
                 fetching: {
                     loading: true,
@@ -150,7 +146,6 @@ export const notesReducer = (state = initialState, action) => {
                 createNote: {
                     loading: false,
                     success: true,
-                    progress: 100,
                 },
                 fetching: {
                     loading: false,
@@ -163,7 +158,6 @@ export const notesReducer = (state = initialState, action) => {
                 createNote: {
                     loading: false,
                     error: action.payload,
-                    progress: 100,
                 },
                 fetching: {
                     loading: false,
@@ -195,7 +189,6 @@ export const notesReducer = (state = initialState, action) => {
                 ...state,
                 updateNote: {
                     loading: true,
-                    progress: 0,
                 },
                 fetching: {
                     loading: true,
@@ -209,7 +202,6 @@ export const notesReducer = (state = initialState, action) => {
                 updateNote: {
                     loading: false,
                     success: true,
-                    progress: 100,
                 },
                 fetching: {
                     loading: false,
@@ -222,7 +214,6 @@ export const notesReducer = (state = initialState, action) => {
                 updateNote: {
                     loading: false,
                     error: action.payload,
-                    progress: 100,
                 },
                 fetching: {
                     loading: false,
@@ -244,7 +235,6 @@ export const notesReducer = (state = initialState, action) => {
                 ...state,
                 deleteNote: {
                     loading: true,
-                    progress: 0,
                 },
                 fetching: {
                     loading: true,
@@ -259,7 +249,6 @@ export const notesReducer = (state = initialState, action) => {
                 deleteNote: {
                     loading: false,
                     success: true,
-                    progress: 100,
                 },
                 fetching: {
                     loading: false,
@@ -273,7 +262,6 @@ export const notesReducer = (state = initialState, action) => {
                 deleteNote: {
                     loading: false,
                     error: action.payload,
-                    progress: 100,
                 },
                 fetching: {
                     loading: false,
