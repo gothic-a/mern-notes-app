@@ -1,0 +1,35 @@
+.empty-screen {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &__text {
+        font-weight: $fw-light;
+        text-transform: uppercase;
+        font-size: $base-fz * 2.5;
+        color: rgba($color-main, .5);
+        letter-spacing: 3px;
+        margin: 0;
+        padding: $padding-sm 0;
+
+        animation: flash 2s infinite;
+    }
+
+    @keyframes flash {
+        0% {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: .5;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
+
+}

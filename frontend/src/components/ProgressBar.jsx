@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react"
 
-const ProgressBar = ({progress, isFetching}) => {
+const ProgressBar = ({progress, isFetching, color}) => {
     const progressLine = useRef(null)
     const [width, setWidth] = useState(0) 
     const [visible, setVisible] = useState(false)

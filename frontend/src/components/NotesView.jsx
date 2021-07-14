@@ -12,7 +12,7 @@ import {
 import { toggleModal } from "../actions/modalActions"
 
 import NotesList from "./NotesList"
-import ProgressBar from "./ProgressBar"
+import EmptyScreen from "./EmptyScreen"
 
 const NotesView = () => {
 
@@ -31,7 +31,7 @@ const NotesView = () => {
         getNotes: {
             loading: getNotesLoading,
             progress: getNotesProgress
-        } 
+        },
     } = useSelector(state => state.notes)
     const pinned = useMemo(() => notesList.filter(n => n.pinned), [notesList])
     const regular = useMemo(() => notesList.filter(n => !n.pinned), [notesList])
@@ -70,9 +70,6 @@ const NotesView = () => {
 
     return (
         <>
-        {
-            <ProgressBar progress={getNotesProgress} isFetching={getNotesLoading}/>
-        }
         <div 
             className={isOpen ? 'notes-view' : 'notes-view sidebar_hidden'}
             ref={notesView}
@@ -80,38 +77,31 @@ const NotesView = () => {
             onScroll={viewScrollHandler}
         >
             {
-                pinned.length !== 0 && <NotesList title="pinned" count={pinned.length}>{pinned}</NotesList>
-            }
-            {
-                pinned.length !== 0 && regular.length === 0 
-                ? (
-                    null
-                ) : (
-                    <NotesList 
-                        title={filterName}
-                        count={regularCount}
-                    >
-                        { 
-                            regular.length !== 0 ? regular : []
+                pinned.length === 0 && regular.length === 0 
+                    ? <EmptyScreen>you can add new notes!</EmptyScreen>
+                    : <>
+                        {
+                            pinned.length !== 0 && <NotesList title="pinned" count={pinned.length}>{pinned}</NotesList>
                         }
-                    </NotesList>
-                )
+                        {
+                            pinned.length !== 0 && regular.length === 0 
+                            ? (
+                                null
+                            ) : (
+                                <NotesList 
+                                    title={filterName}
+                                    count={regularCount}
+                                >
+                                    { 
+                                        regular.length !== 0 ? regular : []
+                                    }
+                                </NotesList>
+                            )
+                        }
+                    </>
             }
+            
         </div>
-        {/* {
-            <Modal 
-                title={modal.content}
-                isOpen={modal.isOpen}
-                onClose={closeModalHandler}
-            >
-                {
-                    <NoteEditor 
-                        variant="update" 
-                        id={updatedNote}
-                    />
-                }
-            </Modal>
-        } */}
         </>
     )
 }

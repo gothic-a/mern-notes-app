@@ -7,17 +7,21 @@ import {
     NOTE_CREATE_REQUEST,
     NOTE_CREATE_SUCCESS,
     NOTE_CREATE_FAIL,
+    NOTE_CREATE_FETCHING_PROGRESS,
     NOTE_UPDATE_REQUEST,
     NOTE_UPDATE_SUCCESS,
     NOTE_UPDATE_FAIL,
+    NOTE_UPDATE_FETCHING_PROGRESS,
     NOTE_DELETE_REQUEST,
     NOTE_DELETE_SUCCESS,
     NOTE_DELETE_FAIL,
+    NOTE_DELETE_FETCHING_PROGRESS,
     NOTES_LIST_PAGE_INCREASE,
     SET_FILTER,
     SET_SEARCH_QUERY,
     EDITING_NOTE_SET,
-    EDITING_NOTE_RESET
+    EDITING_NOTE_RESET,
+    NOTES_FETCHING_PROGRESS
 } from '../constants/notesConstants'
 
 const initialState = {
@@ -35,6 +39,7 @@ const initialState = {
     createNote: {},
     updateNote: {},
     deleteNote: {},
+    fetching: {}
 }
 
 const getNotes = (state, action) => {
@@ -72,12 +77,17 @@ const deleteNote = (state, action) => {
 
 export const notesReducer = (state = initialState, action) => {
     switch(action.type) {
+        // GET NOTES CASES
         case NOTES_GET_REQUEST:
             return {
                 ...state,
                 getNotes: {
                     loading: true,
                     progress: 0,
+                },
+                fetching: {
+                    loading: true,
+                    progress: 0
                 }
             }
         case NOTES_GET_SUCCESS:
@@ -91,6 +101,10 @@ export const notesReducer = (state = initialState, action) => {
                     loading: false,
                     success: true,
                     progress: 100
+                },
+                fetching: {
+                    loading: false,
+                    progress: 100
                 }
             }
         case NOTES_GET_FAIL: 
@@ -100,22 +114,32 @@ export const notesReducer = (state = initialState, action) => {
                     loading: false,
                     error: action.payload,
                     progress: 100
+                },
+                fetching: {
+                    loading: false,
+                    progress: 100
                 }
             }
         case NOTES_GET_FETCHING_PROGRESS:
             return {
                 ...state,
-                getNotes: {
-                    ...state.getNotes,
+                fetching: {
+                    ...state.fetching,
                     progress: action.payload,
                 }
             }
-        
+
+        // CREATE NOTES CASES
         case NOTE_CREATE_REQUEST: 
             return {
                 ...state,
                 createNote: {
                     loading: true,
+                    progress: 0,
+                },
+                fetching: {
+                    loading: true,
+                    progress: 0
                 }
             }
         case NOTE_CREATE_SUCCESS:
@@ -126,6 +150,11 @@ export const notesReducer = (state = initialState, action) => {
                 createNote: {
                     loading: false,
                     success: true,
+                    progress: 100,
+                },
+                fetching: {
+                    loading: false,
+                    progress: 100
                 }
             }
         case NOTE_CREATE_FAIL:
@@ -134,14 +163,28 @@ export const notesReducer = (state = initialState, action) => {
                 createNote: {
                     loading: false,
                     error: action.payload,
+                    progress: 100,
+                },
+                fetching: {
+                    loading: false,
+                    progress: 100
+                }
+            }
+        case NOTE_CREATE_FETCHING_PROGRESS:
+            return {
+                ...state,
+                fetching: {
+                    ...state.fetching,
+                    progress: action.payload,
                 }
             }
 
+        // UPDATE NOTES CASES
         case EDITING_NOTE_SET:  
             return {
-                    ...state,
-                    editingNote: action.payload,
-                }
+                ...state,
+                editingNote: action.payload,
+            }
         case EDITING_NOTE_RESET: 
             return {
                 ...state,
@@ -152,6 +195,11 @@ export const notesReducer = (state = initialState, action) => {
                 ...state,
                 updateNote: {
                     loading: true,
+                    progress: 0,
+                },
+                fetching: {
+                    loading: true,
+                    progress: 0
                 }
             }
         case NOTE_UPDATE_SUCCESS:
@@ -161,6 +209,11 @@ export const notesReducer = (state = initialState, action) => {
                 updateNote: {
                     loading: false,
                     success: true,
+                    progress: 100,
+                },
+                fetching: {
+                    loading: false,
+                    progress: 100
                 }
             }
         case NOTE_UPDATE_FAIL:
@@ -168,15 +221,34 @@ export const notesReducer = (state = initialState, action) => {
                 ...state,
                 updateNote: {
                     loading: false,
-                    error: action.payload
+                    error: action.payload,
+                    progress: 100,
+                },
+                fetching: {
+                    loading: false,
+                    progress: 100
+                }
+            }
+        case NOTE_UPDATE_FETCHING_PROGRESS:
+            return {
+                ...state,
+                fetching: {
+                    ...state.fetching,
+                    progress: action.payload,
                 }
             }
         
+        // DELETE NOTES CASES
         case NOTE_DELETE_REQUEST:
             return {
                 ...state,
                 deleteNote: {
                     loading: true,
+                    progress: 0,
+                },
+                fetching: {
+                    loading: true,
+                    progress: 0
                 }
             }
         case NOTE_DELETE_SUCCESS:
@@ -187,6 +259,11 @@ export const notesReducer = (state = initialState, action) => {
                 deleteNote: {
                     loading: false,
                     success: true,
+                    progress: 100,
+                },
+                fetching: {
+                    loading: false,
+                    progress: 100
                 },
                 regularCount: state.regularCount - 1 
             }
@@ -196,6 +273,28 @@ export const notesReducer = (state = initialState, action) => {
                 deleteNote: {
                     loading: false,
                     error: action.payload,
+                    progress: 100,
+                },
+                fetching: {
+                    loading: false,
+                    progress: 100
+                }
+            }
+        case NOTE_DELETE_FETCHING_PROGRESS:
+            return {
+                ...state,
+                fetching: {
+                    ...state.fetching,
+                    progress: action.payload,
+                }
+            }
+
+        // FILTERING, SEARCHING, PAGE SET
+        case NOTES_FETCHING_PROGRESS: 
+            return {
+                ...state,
+                fetching: {
+                    progress: action.payload,
                 }
             }
 

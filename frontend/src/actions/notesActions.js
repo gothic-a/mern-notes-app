@@ -7,12 +7,15 @@ import {
     NOTE_CREATE_REQUEST,
     NOTE_CREATE_SUCCESS,
     NOTE_CREATE_FAIL,
+    NOTE_CREATE_FETCHING_PROGRESS,
     NOTE_UPDATE_REQUEST,
     NOTE_UPDATE_SUCCESS,
     NOTE_UPDATE_FAIL,
+    NOTE_UPDATE_FETCHING_PROGRESS,
     NOTE_DELETE_REQUEST,
     NOTE_DELETE_SUCCESS,
     NOTE_DELETE_FAIL,
+    NOTE_DELETE_FETCHING_PROGRESS,
     NOTES_LIST_PAGE_INCREASE,
     SET_FILTER,
     SET_SEARCH_QUERY,
@@ -21,17 +24,15 @@ import {
 } from '../constants/notesConstants'
 import { download, upload } from '../utils/onProgress'
 
-const getConfig = ({ userLogin }, isContent = false) => {
+const getConfig = ({ userLogin }) => {
     const { userData: { token } } = userLogin
 
-    let config = {
+    return {
         headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
-        },
+        }
     }
-
-    return config
 }
 
 const getError = (error) => {
@@ -68,7 +69,8 @@ export const createNote = (note) => async (dispatch, getState) => {
     request()
 
     try {
-        const config = getConfig(getState(), 1)
+        const config = getConfig(getState())
+        config.onUploadProgress = upload(progress)
 
         const { data } = await axios.post(`/api/notes`, note, config)
         return success(data)
@@ -80,14 +82,15 @@ export const createNote = (note) => async (dispatch, getState) => {
     function request() {return dispatch({type: NOTE_CREATE_REQUEST})}
     function success(note) {return dispatch({type: NOTE_CREATE_SUCCESS, payload: note})}
     function fail(error) {return dispatch({type: NOTE_CREATE_FAIL, payload: error})}
+    function progress(percent) {dispatch({type: NOTE_CREATE_FETCHING_PROGRESS, payload: percent})}
 }
 
 export const updateNote = (id, note) => async(dispatch, getState) => {
-
     request()
 
     try {
-        const config = getConfig(getState(), 1)
+        const config = getConfig(getState())
+        config.onUploadProgress = upload(progress)
 
         const { data } = await axios.put(`/api/notes/${id}`, note, config)
         return success(data)
@@ -99,11 +102,7 @@ export const updateNote = (id, note) => async(dispatch, getState) => {
     function request() { return dispatch({type: NOTE_UPDATE_REQUEST})}
     function success(note) { return dispatch({type: NOTE_UPDATE_SUCCESS, payload: note})}
     function fail(error) { return dispatch({type: NOTE_UPDATE_FAIL, payload: error})}
-}
-
-export const setEditingNote = (id) => {
-    if (id) return { type: EDITING_NOTE_SET, payload: id }
-    else return { type: EDITING_NOTE_RESET }
+    function progress(percent) {dispatch({type: NOTE_UPDATE_FETCHING_PROGRESS, payload: percent})}
 }
 
 export const deleteNote = (id) => async(dispatch, getState) => {
@@ -111,6 +110,7 @@ export const deleteNote = (id) => async(dispatch, getState) => {
 
     try {
         const config = getConfig(getState())
+        config.onDownloadProgress = download(progress)
 
         await axios.delete(`/api/notes/${id}`, config)
         success(id)
@@ -122,6 +122,12 @@ export const deleteNote = (id) => async(dispatch, getState) => {
     function request() {dispatch({type: NOTE_DELETE_REQUEST})}
     function success(id) {dispatch({type: NOTE_DELETE_SUCCESS, payload: id})}
     function fail(error) {dispatch({type: NOTE_DELETE_FAIL, payload: error})}
+    function progress(percent) {dispatch({type: NOTE_DELETE_FETCHING_PROGRESS, payload: percent})}
+}
+
+export const setEditingNote = (id) => {
+    if (id) return { type: EDITING_NOTE_SET, payload: id }
+    else return { type: EDITING_NOTE_RESET }
 }
 
 export const pageEncrease = () => {

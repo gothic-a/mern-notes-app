@@ -5,12 +5,19 @@ import { userLogout } from '../actions/userActions'
 import { sidebarToggle } from '../actions/sidebarAction'
 
 import SearchBar from './SearchBar'
+import ProgressBar from "./ProgressBar"
 
 const Header = () => {
     const history = useHistory()
 
     const dispatch = useDispatch()
     const { userData } = useSelector(state => state.userLogin)
+    const {
+        fetching: {
+            loading,
+            progress
+        }
+    } = useSelector(state => state.notes)
 
     const burgerClickHandler = () => {
         dispatch(sidebarToggle())
@@ -22,6 +29,13 @@ const Header = () => {
     }
 
     return (
+        <>
+        {
+            <ProgressBar 
+                progress={progress} 
+                isFetching={loading}
+            />
+        }
         <div className="notes-page__header">
             <div 
                 className="burger"
@@ -44,6 +58,7 @@ const Header = () => {
                 </div>
             </div>
         </div>
+        </>
     )
 }
 

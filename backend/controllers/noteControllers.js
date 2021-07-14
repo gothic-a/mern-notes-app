@@ -41,7 +41,7 @@ export const createNote = asyncHandler(async (req, res) => {
 
 export const getNotes = asyncHandler(async (req, res) => {
     const page = +req.query.page || 1
-    const pageSize = +req.query.pageSize || 5
+    const pageSize = +req.query.pageSize || 15
     const filter = req.query.filter || ''
     const search = req.query.search || ''
 

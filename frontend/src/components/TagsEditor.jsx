@@ -8,13 +8,12 @@ import {
     resetUpdate
 } from '../actions/tagsActions'
 
+import EmptyScreen from './EmptyScreen'
+
 const TagsEditor = () => {
     const dispatch = useDispatch()
     const { 
         tagsList, 
-        tagsGet: { 
-            loading: getLoading 
-        } 
     } = useSelector(state => state.tags)
     const { 
         tagsUpdate: { 
@@ -105,47 +104,51 @@ const TagsEditor = () => {
 
     return (
         <div className="tags-editor">
-            <ul 
-                className="tags"
-                onMouseDown={tagsClickHandler}
-            >
-                {
-                    tagsList.length !== 0 && (
-                        tagsList.map(t => (
-                            <li 
-                                className="tags__item" 
-                                data-id={t._id} 
-                                data-value={t.name}
-                                key={t._id}
-                            >
-                                <div className="tags__item-text">
-                                    <input 
-                                        className='edit' 
-                                        type='text'
-                                        onBlur={reset}
-                                    /> 
-                                    <p className="text">{t.name}</p>
-                                </div>
-                                
-                                <div className="tags__item-controls">
-                                    <i 
-                                        className="far fa-check done"
-                                        data-type="done"
-                                    ></i>
-                                    <i 
-                                        className="fas fa-pen pen"
-                                        data-type="edit"
-                                    ></i>
-                                    <i 
-                                        className="far fa-trash trash"
-                                        data-type="delete"
-                                    ></i>
-                                </div>
-                            </li>
-                        ))
-                    ) 
-                }
-            </ul>
+            {
+                tagsList.length !== 0 
+                ? (
+                    <ul 
+                        className="tags"
+                        onMouseDown={tagsClickHandler}
+                    >
+                        {
+                            tagsList.map(t => (
+                                <li 
+                                    className="tags__item" 
+                                    data-id={t._id} 
+                                    data-value={t.name}
+                                    key={t._id}
+                                >
+                                    <div className="tags__item-text">
+                                        <input 
+                                            className='edit' 
+                                            type='text'
+                                            onBlur={reset}
+                                        /> 
+                                        <p className="text">{t.name}</p>
+                                    </div>
+                                    
+                                    <div className="tags__item-controls">
+                                        <i 
+                                            className="far fa-check done"
+                                            data-type="done"
+                                        ></i>
+                                        <i 
+                                            className="fas fa-pen pen"
+                                            data-type="edit"
+                                        ></i>
+                                        <i 
+                                            className="far fa-trash trash"
+                                            data-type="delete"
+                                        ></i>
+                                    </div>
+                                </li>
+                            ))
+                        }
+                    </ul>
+                ) : <EmptyScreen>you can add new tag!</EmptyScreen>
+                
+            }
             <div className="add-tag">
                 <input 
                     type="text" 

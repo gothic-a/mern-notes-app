@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { toggleModal } from "../actions/modalActions"
 
-import { createNote, updateNote } from "../actions/notesActions"
+import { createNote, setEditingNote, updateNote } from "../actions/notesActions"
 
 const NoteEditor = ({variant}) => {
     const [title, setTitle] = useState('')
@@ -16,13 +16,7 @@ const NoteEditor = ({variant}) => {
     const { tagsList: userTagsList } = useSelector(state => state.tags)
     const { 
         notesList,
-        editingNote,
-        createNote: {
-
-        },
-        updateNote: {
-
-        }
+        editingNote
     } = useSelector(state => state.notes)
 
     useEffect(() => {
@@ -58,6 +52,7 @@ const NoteEditor = ({variant}) => {
         const res = await dispatch(createNote(note))
         if(res) {
             dispatch(toggleModal())
+            resetState()
         }
     }
 
@@ -72,6 +67,8 @@ const NoteEditor = ({variant}) => {
         const res = await dispatch(updateNote(editingNote, note))
         if(res) {
             dispatch(toggleModal())
+            dispatch(setEditingNote())
+            resetState()
         }
     }
 
