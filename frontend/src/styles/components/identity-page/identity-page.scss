@@ -21,5 +21,25 @@
     }
 }
 
+@media (max-width: $break-s) {
+    .identity-page__container {
+        min-width: 90vw;
+
+        .form-container {
+            padding: $padding-s $padding-m;
+        }
+    }
+}
+
+@media (max-width: $break-xs) {
+    .identity-page__container {
+        min-width: 90vw;
+
+        .form-container {
+            padding: $padding-s $padding-s;
+        }
+    }
+}
+
 @import './toggle-bar.scss';
 @import './form.scss';

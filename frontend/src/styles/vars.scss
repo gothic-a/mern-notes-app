@@ -35,4 +35,18 @@ $shadow-note: 0px 0px 10px 0px rgba($color-main, 0.05);
 
 $header-height: 11vh;
 $tags-width: 6vw;
+$tags-width-xl: 8vw;
+$tags-width-l: 10vw;
+$tags-width-m: 14vw;
+$tags-width-s: 16vw;
+$tags-width-xs: 20vw;
+
+$break-xs: 425px;
+$break-s: 576px;
+$break-m: 768px;
+$break-l: 992px;
+$break-xl: 1200px;
+$break-xxl: 1400px;
+
+
 $tags-height: $base-fz * 1.15 + $padding-sm * 2;

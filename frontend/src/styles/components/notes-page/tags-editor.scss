@@ -1,7 +1,7 @@
 .tags-editor {
     padding: $padding-s 0;
     max-height: 90vh;
-    min-width: 500px;
+    width: 500px;
 
     .empty-screen {
 
@@ -153,5 +153,51 @@
             height: 100%;
         }
     }
+}
 
+@media (max-width: $break-s) {
+    .tags-editor {
+        width: 90vw;
+    }
+
+    .tags {
+
+        .tags__item {
+
+            &-text {
+                width: 50%;
+            }
+        }
+    }
+}
+
+@media (max-width: $break-xs) {
+    .tags-editor {
+        .tags {
+            padding-right: $padding-sm;
+            padding-left: $padding-sm;
+
+            .tags__item {
+
+                &-text {
+                    width: 55%;
+                }
+            }
+        }
+
+        .tags__item-controls {
+            i {
+                font-size: $base-fz * 1.2;
+                padding: 3px;
+                margin-left: 10px;
+            }
+        }
+
+        .add-tag {
+
+            &__done {
+                margin-right: 0;
+            }
+        }
+    }
 }

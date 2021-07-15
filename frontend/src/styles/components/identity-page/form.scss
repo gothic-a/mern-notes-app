@@ -95,3 +95,15 @@
         }
     }
 } 
+
+@media (max-width: $break-s) {
+    .form__button {
+        padding: $padding-sm $padding-m * 1.5;
+    }
+}
+
+@media (max-width: $break-xs) {
+    .form__button {
+        padding: $padding-sm $padding-s * 1.5;
+    }
+}

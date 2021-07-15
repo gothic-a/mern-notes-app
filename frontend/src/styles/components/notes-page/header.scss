@@ -88,3 +88,47 @@
         }
     }
 }
+
+
+@media (max-width: $break-l) {
+    .notes-page__header {
+        padding: $padding-sm $padding-s;
+
+        .search-bar {
+            width: 60%;
+        }
+    }
+}
+
+@media (max-width: $break-m) {
+    .notes-page__header {
+        padding: $padding-sm $padding-s;
+
+        .search-bar {
+            min-width: 50%;
+        }
+    }
+}
+
+@media (max-width: $break-s) {
+    .notes-page__header {
+        padding: $padding-sm $padding-sm;
+
+        .search-bar {
+            min-width: 65%;
+            padding: 0 $padding-sm;
+        }
+
+        .profile__name {
+            display: none;
+        }
+
+        .profile__logout {
+            margin-left: 0;
+        }
+    }
+}
+
+@media (max-width: $break-xs) {
+
+}

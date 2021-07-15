@@ -99,7 +99,7 @@ const NotesView = () => {
                             )
                         }
                     </>
-                    : !getNotesLoading && <EmptyScreen>you can add new notes!</EmptyScreen>
+                    : <EmptyScreen>you can add new notes!</EmptyScreen>
             }
             
         </div>

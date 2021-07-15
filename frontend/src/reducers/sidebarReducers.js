@@ -5,9 +5,9 @@ import {
 
 const { innerWidth: width } = window 
 
-// const isOpen = width < 992 ? false : true
+const isOpen = width < 992 ? false : true
 
-export const sidebarReducer = (state = { isOpen: true }, action) => {
+export const sidebarReducer = (state = { isOpen }, action) => {
     switch (action.type) {
         case SET_SIDEBAR_CLOSE: 
             return {

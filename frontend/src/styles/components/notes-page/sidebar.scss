@@ -1,3 +1,4 @@
+
 .side-bar {
     position: fixed;
     top: 0;
@@ -127,5 +128,102 @@
 
     .sidebar__controls {
         margin-bottom: $margin-s;
+    }
+}
+
+@media (max-width: $break-xl) {
+        
+    .side-bar {
+        width: 26vw;
+
+        &.hidden {
+            width: $tags-width-xl + 0.3;
+        }
+
+        &__item-icon {
+            width: $tags-width-xl;
+        }
+
+        &__item-text {
+            left: $tags-width-xl + 0.25;
+        }
+    }
+}
+
+@media (max-width: $break-l) {
+        
+    .side-bar {
+        width: 40vw;
+        box-shadow: 5px 0px 25px 0px rgba(39, 40, 40, 0.3);
+
+        &.hidden {
+            width: $tags-width-l + 0.3;
+            box-shadow: none;
+        }
+
+        &__item-icon {
+            width: $tags-width-l;
+        }
+
+        &__item-text {
+            left: $tags-width-l + 0.25;
+        }
+    }
+}
+
+@media (max-width: $break-m) {
+        
+    .side-bar {
+        width: 50vw;
+
+        &.hidden {
+            width: $tags-width-m + 0.3;
+        }
+
+        &__item-icon {
+            width: $tags-width-m;
+        }
+
+        &__item-text {
+            left: $tags-width-m + 0.25;
+        }
+    }
+}
+
+@media (max-width: $break-s) {
+        
+    .side-bar {
+        width: 60vw;
+
+        &.hidden {
+            width: $tags-width-s + 0.3;
+        }
+
+        &__item-icon {
+            width: $tags-width-s;
+        }
+
+        &__item-text {
+            left: $tags-width-s + 0.25;
+        }
+    }
+}
+
+@media (max-width: $break-xs) {
+        
+    .side-bar {
+        width: 75vw;
+
+        &.hidden {
+            width: $tags-width-xs + 0.3;
+        }
+
+        &__item-icon {
+            width: $tags-width-xs;
+        }
+
+        &__item-text {
+            left: $tags-width-xs + 0.25;
+        }
     }
 }
