@@ -1,7 +1,7 @@
 # MERN Notes Keeper  
 
 [![N|Solid](https://res.cloudinary.com/dsohtcuy3/image/upload/v1626470356/button_demo_1_k6is2z.png)](https://mern-keep-notes-app.herokuapp.com/)
-#
+
 ![image](https://res.cloudinary.com/dsohtcuy3/image/upload/v1626475250/Screenshot_1_atrgwv.png)
 
 ### Test account:
